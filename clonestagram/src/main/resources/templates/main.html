@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    * {
+        box-sizing: border-box; /* border/padding 포함한 계산 */
+        margin: 0;
+        padding: 0;
+    }
+
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+
+
+    .mainSplit{
+        border: 1px solid;
+        width: 100%;
+        height: calc(100% - 0px);
+        display: flex;
+    }
+
+    .mainLeftContent{
+        width: 245px;
+        height: 100%;
+        border: 1px solid;
+    }
+
+    .mainContent{
+        width: calc(100% - 240px);
+        height: 100%;
+
+        display: flex;
+        border: 1px solid red;
+    }
+
+    .storyAndPost{
+        width: 720px;
+        height: 100%;
+        margin-left: 170px;
+        border: 1px solid blue;
+    }
+
+    .rightContent{
+        width: calc(100% - 720px);
+        height: 100%;
+
+        border: 1px solid green;
+    }
+
+    .storyContent{
+        height: 130px;
+
+        margin-top: 10px;
+        border: 1px solid black;
+    }
+
+    .postContent{
+        margin-top: 10px;
+
+        height: calc(100% - 150px);
+
+        border: 1px solid darkgray;
+    }
+
+
+</style>
+<body>
+
+    <div class="mainSplit">
+        <div class="mainLeftContent">
+            기능 따까리들
+        </div>
+
+        <div class="mainContent">
+
+            <div class = "storyAndPost">
+                <div class="storyContent">
+                    스토리 영역
+                </div>
+
+
+                <div class="postContent">
+                    메인 게시글 영역
+                </div>
+            </div>
+
+            <div class="rightContent">
+                친구 추천란
+            </div>
+        </div>
+    </div>
+</body>
+</html>
