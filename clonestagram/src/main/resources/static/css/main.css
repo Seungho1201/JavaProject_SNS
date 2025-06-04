@@ -1,0 +1,256 @@
+html, body {
+    height: 100%;
+}
+
+.story{
+
+    width: 700px;
+    height: 100px;
+    border: 1px solid;
+
+    margin-left: 410px;
+}
+
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 232px;
+    border-right: 1px solid #e5e7eb;
+    padding-top: 120px;
+    padding-left: 12px;
+    display: none;
+}
+
+@media (min-width: 1024px) {
+    .sidebar {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    font-size: 1.25rem;
+    color: #111827;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+}
+
+.nav-item:hover {
+    background-color: #f3f4f6;
+}
+
+.nav-item i,
+.nav-item img {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.nav-item span {
+    margin-left: 1rem;
+}
+
+.profile-img {
+    border-radius: 9999px;
+    border: 2px solid white;
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.more-menu {
+    margin-top: auto;
+    margin-bottom: 1.5rem;
+}
+
+/* Feed */
+.main {
+    padding-bottom: 64px;
+    display: flex;
+    gap: 3rem;
+    max-width: 1600px;
+    height: 100%;
+    margin: 0 auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.feed {
+    width: 800px;
+    max-width: 800px;
+    height: 100%;
+    margin-left: 430px;
+}
+
+/* Right Sidebar */
+.right-sidebar {
+    width: 300px;
+    margin-left: 3rem;
+    display: none;
+}
+
+@media (min-width: 1024px) {
+    .right-sidebar {
+        display: block;
+    }
+}
+
+
+.nav-profile-img {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 9999px;
+}
+
+.postStyle{
+    margin-left: 54px;
+    width : 470px;
+
+}
+
+.postHeader{
+    display: flex;
+
+
+}
+
+.postProfileStyle{
+    border-radius: 40px;
+}
+
+.postImg{
+    width: 100%;
+    border-radius: 5px;
+}
+
+.postActionButtonStyle{
+    display: flex;
+}
+
+
+/* Right Sidebar Wrapper */
+.right-sidebar-wrapper {
+    display: none;
+    width: 320px;
+    margin-left: 3rem;
+}
+
+@media (min-width: 1024px) {
+    .right-sidebar-wrapper {
+        display: block;
+    }
+}
+
+.right-sidebar {
+    margin-top: -40px;
+    margin-left: 535px;
+    position: fixed;
+    width: 320px;
+}
+
+.sidebar-user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+}
+
+.sidebar-user-info img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 9999px;
+}
+
+.sidebar-user-info h3 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.sidebar-user-info p {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0;
+}
+
+.logout-button {
+    margin-left: auto;
+    color: #06f;
+    font-size: 0.875rem;
+    font-weight: 600;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.suggestions-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.suggestions-header h3 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #6b7280;
+    margin: 0;
+}
+
+.suggestion-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.suggestion-item img {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    margin-right: 0.75rem;
+}
+
+.suggestion-item h4 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.follow-button {
+    color: #06f;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.sidebar-footer {
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+.sidebar-footer nav {
+    margin-bottom: 1rem;
+}
+
+.sidebar-footer a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.sidebar-footer a:hover {
+    text-decoration: underline;
+}

@@ -1,98 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Clonestagram</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/main.css">
 </head>
-<style>
-    * {
-        box-sizing: border-box; /* border/padding 포함한 계산 */
-        margin: 0;
-        padding: 0;
-    }
+<body class="bg-gray-50">
 
-    html, body {
-        height: 100%;
-        margin: 0;
-    }
+<div class="story">
+    스토리 만들거임
+</div>
+<main class="main">
 
+    <aside class="sidebar">
+        <nav class="nav">
+            <a href="/test" class="nav-item">
+                <i class="fas fa-home"></i><span>홈</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-search"></i><span>검색</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="far fa-compass"></i><span>탐색 탭</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="far fa-play-circle"></i><span>릴스</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="far fa-paper-plane"></i><span>메세지</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="far fa-heart"></i><span>알림</span>
+            </a>
+            <a href="/post" class="nav-item">
+                <i class="far fa-plus-square"></i><span>만들기</span>
+            </a>
+            <a href="/mypage" class="nav-item">
+                <img src="https://placehold.co/80" class="profile-img" alt="Story"/><span>프로필</span>
+            </a>
+        </nav>
 
-    .mainSplit{
-        border: 1px solid;
-        width: 100%;
-        height: calc(100% - 0px);
-        display: flex;
-    }
-
-    .mainLeftContent{
-        width: 245px;
-        height: 100%;
-        border: 1px solid;
-    }
-
-    .mainContent{
-        width: calc(100% - 240px);
-        height: 100%;
-
-        display: flex;
-        border: 1px solid red;
-    }
-
-    .storyAndPost{
-        width: 720px;
-        height: 100%;
-        margin-left: 170px;
-        border: 1px solid blue;
-    }
-
-    .rightContent{
-        width: calc(100% - 720px);
-        height: 100%;
-
-        border: 1px solid green;
-    }
-
-    .storyContent{
-        height: 130px;
-
-        margin-top: 10px;
-        border: 1px solid black;
-    }
-
-    .postContent{
-        margin-top: 10px;
-
-        height: calc(100% - 150px);
-
-        border: 1px solid darkgray;
-    }
-
-
-</style>
-<body>
-
-    <div class="mainSplit">
-        <div class="mainLeftContent">
-            기능 따까리들
+        <div class="more-menu">
+            <a href="#" class="nav-item">
+                <i class="fas fa-bars"></i><span>More</span>
+            </a>
         </div>
 
-        <div class="mainContent">
-
-            <div class = "storyAndPost">
-                <div class="storyContent">
-                    스토리 영역
-                </div>
+    </aside>
 
 
-                <div class="postContent">
-                    메인 게시글 영역
-                </div>
+    <section class="feed">
+        <!-- 여기 게시글들 th:each 쓰면 됨-->
+        <div class="postStyle">
+            <div class="postHeader">
+                <img src="https://placehold.co/40" class="postProfileStyle">
+                <p>작성 유저 ID</p>
+                <p>더보기</p>
             </div>
 
-            <div class="rightContent">
-                친구 추천란
+            <div class="">
+                <img src="https://placehold.co/400" class="postImg">
+            </div>
+
+            <div class="postActionButtonStyle">
+                <p>좋아요</p>
+                <p>댓글</p>
+                <p>보내기</p>
+                <p>스크랩</p>
+            </div>
+
+            <div>
+                <p>좋아요 999개</p>
+            </div>
+
+            <div>
+                <p>글쓴이 - 게시글 내용</p>
+            </div>
+            <hr>
+        </div>
+    </section>
+
+    <aside class="right-sidebar">
+        <!-- 우측 사이드바 -->
+        <div class="right-sidebar-wrapper">
+            <div class="right-sidebar">
+                <div class="sidebar-user-info">
+                    <img src="https://placehold.co/80" alt="Profile" />
+                    <div>
+                        <h3 >유저 이름</h3>
+                        <p >유저아이디</p>
+                    </div>
+                    <a href="/logout">
+                        <button class="logout-button">Logout</button>
+                    </a>
+                </div>
+
+                <div class="suggestions">
+                    <div class="suggestions-header">
+                        <h3>회원님을 위한 추천</h3>
+                    </div>
+
+                    <div class="suggestion-item">
+                        <img src="https://placehold.co/80" alt="Suggestion" />
+                        <div class="flex-1">
+                            <h4>추천유저 ID</h4>
+                        </div>
+                        <button class="follow-button">Follow</button>
+                    </div>
+                </div>
+
+                <footer class="sidebar-footer">
+                    <nav>
+                        <ul>
+                            <li>오승호, 김용빈, 김수길 제작</li>
+                        </ul>
+                    </nav>
+                    <p>Java Framework Final Project</p>
+                </footer>
             </div>
         </div>
-    </div>
-</body>
-</html>
+
+    </aside>
+</main>
+
+
