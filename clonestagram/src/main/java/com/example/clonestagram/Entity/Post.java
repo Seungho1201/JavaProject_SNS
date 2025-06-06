@@ -24,4 +24,6 @@ public class Post {
     @CreationTimestamp
     private String postDate;
 
+
+
 }
