@@ -35,7 +35,7 @@
             <a href="#" class="nav-item">
                 <i class="far fa-heart"></i><span>알림</span>
             </a>
-            <a href="/post" class="nav-item">
+            <a href="/write" class="nav-item">
                 <i class="far fa-plus-square"></i><span>만들기</span>
             </a>
             <a href="/mypage" class="nav-item">
@@ -54,7 +54,7 @@
 
     <section class="feed">
         <!-- 여기 게시글들 th:each 쓰면 됨-->
-        <div class="postStyle">
+        <div  th:each="post : ${posts}" class="postStyle">
             <div class="postHeader">
                 <img src="https://placehold.co/40" class="postProfileStyle">
                 <p>작성 유저 ID</p>
@@ -63,6 +63,7 @@
 
             <div class="">
                 <img src="https://placehold.co/400" class="postImg">
+                <p th:text="${post.content}">내용</p>
             </div>
 
             <div class="postActionButtonStyle">
