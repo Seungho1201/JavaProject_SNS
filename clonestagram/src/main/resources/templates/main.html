@@ -8,6 +8,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="/css/main.css">
 </head>
+
+
+
 <body class="bg-gray-50">
 
 <div class="story">
@@ -57,20 +60,31 @@
         <div  th:each="post : ${posts}" class="postStyle">
             <div class="postHeader">
                 <img src="https://placehold.co/40" class="postProfileStyle">
-                <p>작성 유저 ID</p>
+                <p th:text="${post.user.userId}">작성 유저 ID</p>
                 <p>더보기</p>
             </div>
 
             <div class="">
                 <img src="https://placehold.co/400" class="postImg">
-                <p th:text="${post.content}">내용</p>
+
             </div>
 
             <div class="postActionButtonStyle">
-                <p>좋아요</p>
-                <p>댓글</p>
-                <p>보내기</p>
-                <p>스크랩</p>
+                <!-- Likes -->
+                <button class="iconButton">
+                    <i class="far fa-heart"></i>
+                </button>
+
+                <!-- Comment -->
+                <!-- 클릭시 모달창(상세페이지(댓글 포함))을 띄운다-->
+                <button class="iconButton" onclick="openModal()">
+                    <i class="far fa-comment"></i>
+                </button>
+
+                <!-- DM -->
+                <button class="iconButton">
+                    <i class="far fa-paper-plane"></i>
+                </button>
             </div>
 
             <div>
@@ -78,14 +92,16 @@
             </div>
 
             <div>
-                <p>글쓴이 - 게시글 내용</p>
+                <p th:text="${post.content}">내용</p>
             </div>
             <hr>
         </div>
     </section>
 
+
+    <!-- 우측 사이드바 -->
     <aside class="right-sidebar">
-        <!-- 우측 사이드바 -->
+
         <div class="right-sidebar-wrapper">
             <div class="right-sidebar">
                 <div class="sidebar-user-info">
@@ -123,8 +139,34 @@
                 </footer>
             </div>
         </div>
-
     </aside>
 </main>
+
+<!-- 모달 삽입 -->
+<div th:replace="~{fragments/modal :: modalFragment}"></div>
+
+
+
+<script>
+    function openModal() {
+        document.getElementById("commentModal").classList.add("active");
+        document.body.style.overflow = 'hidden'; // 스크롤 막기
+    }
+
+    function closeModal() {
+        document.getElementById("commentModal").classList.remove("active");
+        document.body.style.overflow = ''; // 스크롤 원래대로
+    }
+
+    // 모달 외부 클릭 시 닫기
+    window.addEventListener('click', function (e) {
+        const modal = document.getElementById("commentModal");
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+</script>
+
+
 
 

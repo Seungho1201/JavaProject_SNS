@@ -1,15 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Instagram Clone</title>
+    <link rel="stylesheet" href="/css/write.css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 </head>
-<body>
-    <div>
-        <form method="post" action="write">
-            <input name="content" type="text" placeholder="글 ㄱㄱ"/>
-            <button type="submit">업로드</button>
-        </form>
+<body class="bg-light-gray">
+
+<header class="header">
+    <div class="container header-inner">
+        <div class="left">
+            <button class="back-button">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <span class="title">Create new post</span>
+        </div>
+        <button class="share-button">Share</button>
     </div>
+</header>
+
+<main class="main">
+    <div class="post-box">
+        <div class="post-grid">
+            <div class="upload-section">
+                <div class="upload-inner">
+                    <div class="upload-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <h3 class="upload-title">Drag photos and videos here</h3>
+                    <button class="upload-button">Select from computer</button>
+                </div>
+            </div>
+
+
+                <div class="form-inner">
+                    <div class="user-info">
+                        <img src="https://placehold.co/470" alt="Profile" class="profile-img">
+                        <span class="user-id" th:text="${userId}">유저 ID</span>
+                    </div>
+
+                    <!-- 입력 로직 -->
+                    <form method="post" action="/write">
+                        <input type="text" name="content"  placeholder="Write a caption..." style="height: 200px; width: 300px">
+
+                        <input type="submit" class="submit-button">
+                    </form>
+
+                </div>
+
+
+
+        </div>
+    </div>
+</main>
+
 </body>
 </html>
