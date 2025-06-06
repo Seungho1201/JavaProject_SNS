@@ -8,12 +8,16 @@ import com.example.clonestagram.Security.MyUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
+
+
 
 @Controller
 @RequiredArgsConstructor
@@ -38,6 +42,7 @@ public class PostController {
         return "write";
     }
 
+
     @PostMapping("/write")
     public String write(@RequestParam String content, Authentication auth) {
 
@@ -59,6 +64,78 @@ public class PostController {
 
         postRepository.save(post);
 
+        return "redirect:/main";
+
+
+    }
+
+
+    //글 수정 화면 Mapping
+    @GetMapping("/edit/{postId}")
+    public String editPostForm(@PathVariable Long postId, Authentication auth, Model model) {
+        if (auth == null) {
+            return "login";
+        }
+
+        Optional<Post> postOpt = postRepository.findById(postId);
+        if (postOpt.isEmpty()) {
+            return "main";
+        }
+
+        Post post = postOpt.get();
+        model.addAttribute("post", post);
+        return "edit";
+
+
+
+
+    }
+
+
+    @PostMapping("/edit/{postId}")
+    public String editPost(@PathVariable Long postId,
+                           @RequestParam String content,
+                           Authentication auth,
+                           Model model) {
+        if (auth == null) {
+            return "login";
+        }
+
+        Optional<Post> postOpt = postRepository.findById(postId);
+        if (postOpt.isPresent()) {
+            Post post = postOpt.get();
+
+            MyUserDetailsService.CustomUser user = (MyUserDetailsService.CustomUser) auth.getPrincipal();
+            model.addAttribute("loginUserId", user.userId);
+
+
+            if (!post.getUser().getUserId().equals(user.userId)) {
+                System.out.println("누구새요?");
+                return "redirect:/main";
+            }
+
+            post.setContent(content);
+            postRepository.save(post);
+        }
+
+
+        return "redirect:/main";
+    }
+
+    @GetMapping("/delete/{postId}")
+    public String delete(@PathVariable Long postId ,Authentication auth, Model model) {
+        if (auth == null) {
+            return "login";
+        }
+        MyUserDetailsService.CustomUser user = (MyUserDetailsService.CustomUser) auth.getPrincipal();
+        Optional<Post> postOpt = postRepository.findById(postId);
+
+        if (postOpt.isPresent()) {
+            Post post = postOpt.get();
+            if (post.getUser().getUserId().equals(user.userId)) {
+                postRepository.delete(post);
+            }
+        }
         return "redirect:/main";
     }
 

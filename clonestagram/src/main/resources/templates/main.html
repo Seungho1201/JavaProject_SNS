@@ -62,6 +62,16 @@
                 <img src="https://placehold.co/40" class="postProfileStyle">
                 <p th:text="${post.user.userId}">작성 유저 ID</p>
                 <p>더보기</p>
+
+                <p th:if="${post.user.userId == loginUserId}">
+                    <a th:href="@{'/edit/' + ${post.no}}">[수정]</a>
+                </p>
+
+                <p th:if="${post.user.userId == loginUserId}">
+                    <a th:href="@{'/delete/' + ${post.no}}">[삭제]</a>
+                </p>
+
+
             </div>
 
             <div class="">

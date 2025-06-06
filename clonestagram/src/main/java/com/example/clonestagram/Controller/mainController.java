@@ -20,16 +20,23 @@ import java.util.List;
 @RequiredArgsConstructor
 public class mainController {
 
-    @Autowired
-    private PostRepository postRepository;
+
+    private final PostRepository postRepository;
 
 
     // 메인 화면 Mapping
     @GetMapping("/main")
-    public String main(Model model) {
+    public String main(Authentication auth ,Model model) {
         List<Post> postList = postRepository.findAll(Sort.by(Sort.Direction.DESC, "no"));
 
         model.addAttribute("posts", postList);
+
+        //다른 유저의 글에는 수정 삭제 버튼 뜨지 않게 하기 위함
+        if (auth != null && auth.isAuthenticated()) {
+            MyUserDetailsService.CustomUser user = (MyUserDetailsService.CustomUser) auth.getPrincipal();
+            model.addAttribute("loginUserId", user.userId);
+        }
+
         return "main";
     }
 
