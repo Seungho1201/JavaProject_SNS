@@ -290,7 +290,7 @@ html, body {
 .modal-content {
     background: white;
     width: 75%;
-    height: 620px;
+    height: 700px;
     overflow-y: auto;
     position: relative;
 
@@ -308,5 +308,5 @@ html, body {
 }
 
 .modalComment{
-    height: 385px;
+    height: 340px;
 }

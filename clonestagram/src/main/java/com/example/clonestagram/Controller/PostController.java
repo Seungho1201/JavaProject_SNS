@@ -1,5 +1,6 @@
 package com.example.clonestagram.Controller;
 
+import com.example.clonestagram.Dto.Response.PostResponseDto;
 import com.example.clonestagram.Entity.Post;
 import com.example.clonestagram.Entity.User;
 import com.example.clonestagram.Repository.PostRepository;
@@ -9,10 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -60,6 +60,27 @@ public class PostController {
         postRepository.save(post);
 
         return "redirect:/main";
+    }
+
+
+    @GetMapping("/detail/{no}")
+    @ResponseBody
+    public PostResponseDto detail( @PathVariable Long no, Model model) {
+        Optional<Post> post = postRepository.findById(no);
+
+        PostResponseDto postResponseDto = new PostResponseDto();
+
+        postResponseDto.setNo(post.get().getNo());
+        postResponseDto.setUser(post.get().getUser());
+        postResponseDto.setContent(post.get().getContent());
+        postResponseDto.setPostRecommend(post.get().getPostRecommend());
+        postResponseDto.setPostImg(post.get().getPostImg());
+        postResponseDto.setPostDate(post.get().getPostDate());
+
+        return postResponseDto;
+
+
+        //return Map.of("content", post.get().getContent());
     }
 
 }
