@@ -12,7 +12,7 @@ public class Comment {
     @GeneratedValue
     private Long no;                // 댓글 번호
 
-    private Long commentContent;    // 댓글 내용
+    private String commentContent;    // 댓글 내용
 
     @ManyToOne
     @JoinColumn(name = "user_id")
