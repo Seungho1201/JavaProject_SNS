@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/mypage.css">
+</head>
+<body>
+<div class="container">
+    <aside class="sidebar">
+        <nav>
+            <a href="/main" class="nav-item">
+                <i class="fas fa-home"></i><span>홈</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-search"></i><span>검색</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="far fa-compass"></i><span>탐색 탭</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="far fa-play-circle"></i><span>릴스</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="far fa-paper-plane"></i><span>메세지</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="far fa-heart"></i><span>알림</span>
+            </a>
+            <a href="/write" class="nav-item">
+                <i class="far fa-plus-square"></i><span>만들기</span>
+            </a>
+            <a href="/mypage" class="nav-item">
+                <img src="https://placehold.co/80" class="profile-img" alt="Story"/><span>프로필</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="profile">
+        <section class="profile-header">
+            <img src="https://placehold.co/100" alt="Profile Picture">
+            <div class="info">
+                <div class="top">
+                    <h1 th:text="${userName}">유저 이름</h1>
+                    <a href="/editprofile" class="edit_a">프로필 편집</a>
+                    <button>보관된 스토리 보기</button>
+                </div>
+                <div class="stats">
+                    <div><strong>0</strong> posts</div>
+                    <div><strong>0</strong> followers</div>
+                    <div><strong>0</strong> following</div>
+                </div>
+                <div class="desc">
+                    <h2 th:text="${userName}">[사용자이름]</h2>
+                    <h4 class="userId" th:text="${userId}">[사용자아이디]</h4>
+                </div>
+            </div>
+        </section>
+
+        <section class="stories">
+            <div class="story">
+                <div class="circle"><i class="fas fa-plus"></i></div>
+                <span>New</span>
+            </div>
+        </section>
+
+        <section class="posts">
+            <div class="tabs">
+                <a href="/mypage/posts" class="tab-button" th:classappend="${tab eq 'posts'} ? 'active'"><i class="fas fa-th"></i><span> 게시물</span></a>
+                <a href="/mypage/tagged" class="tab-button" th:classappend="${tab eq 'tagged'} ? 'active'"><i class="fas fa-user-tag"></i><span> 저장됨</span></a>
+                <a href="/mypage/saved" class="tab-button" th:classappend="${tab eq 'saved'} ? 'active'"><i class="fas fa-bookmark"></i><span> 태그됨</span></a>
+            </div>
+
+            <!-- 내가 올린 게시글 탭 -->
+            <!-- 게시물이 있는 경우 -->
+            <div class="post-grid" th:if="${tab eq 'posts'} and ${#lists.size(userPost) gt 0}">
+                <div class="post" th:each="post : ${userPost}">
+                    <img src="https://placehold.co/300" alt="Post">
+                    <div class="post-content">
+                        <p th:text="${post.postContent}">내용</p>
+                        <p th:text="'추천 : ' + ${post.postRecommend}">추천</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 게시물이 없을 경우 -->
+            <div class="post-empty" th:if="${tab eq 'posts'} and ${#lists.isEmpty(userPost)}">
+                <div class="empty-content">
+                    <i class="fas fa-camera fa-3x"></i>
+                    <h2>사진 공유</h2>
+                    <p>사진을 공유하면 회원님의 프로필에 표시됩니다.</p>
+                    <a href="/write" class="share-btn">첫 사진 공유하기</a>
+                </div>
+            </div>
+
+
+
+            <!-- 태그된 게시글 -->
+            <div class="post-grid" th:if="${tab eq 'tagged'} and ${#lists.size(userPost) gt 0}">
+                <div class="post" th:each="post : ${userPost}">
+                    <img src="https://placehold.co/300" alt="Tagged Post">
+                    <div class="post-content">
+                        <p th:text="${post.postContent}">내용</p>
+                        <p th:text="'추천 : ' + ${post.postRecommend}">추천</p>
+                    </div>
+                </div>
+            </div>
+            <div class="post-grid post-empty" th:if="${tab eq 'tagged'} and ${#lists.isEmpty(userPost)}">
+                <p>태그된 게시물이 없습니다.</p>
+            </div>
+
+            <!-- 저장한 게시글 -->
+            <div class="post-grid" th:if="${tab eq 'saved'} and ${#lists.size(userPost) gt 0}">
+                <div class="post" th:each="post : ${userPost}">
+                    <img src="https://placehold.co/300" alt="Saved Post">
+                    <div class="post-content">
+                        <p th:text="${post.postContent}">내용</p>
+                        <p th:text="'추천 : ' + ${post.postRecommend}">추천</p>
+                    </div>
+                </div>
+            </div>
+            <div class="post-grid post-empty" th:if="${tab eq 'saved'} and ${#lists.isEmpty(userPost)}">
+                <p>저장한 게시물이 없습니다.</p>
+            </div>
+        </section>
+    </main>
+</div>
+</body>
+</html>
