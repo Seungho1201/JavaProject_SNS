@@ -1,0 +1,286 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9fafb;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 232px;
+    border-right: 1px solid #e5e7eb;
+    padding-top: 120px;
+    padding-left: 12px;
+    display: none;
+}
+
+@media (min-width: 1024px) {
+    .sidebar {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    font-size: 1.25rem;
+    color: #111827;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+}
+
+.nav-item:hover {
+    background-color: #f3f4f6;
+}
+
+.nav-item i,
+.nav-item img {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.nav-item span {
+    margin-left: 1rem;
+}
+
+/* 메인 프로필 */
+.profile {
+    margin-left: 244px;
+    padding: 32px;
+    width: 100%;
+    max-width: 1000px;
+}
+
+/* 프로필 상단 */
+.profile-header {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 32px;
+}
+
+.profile-header img {
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
+}
+
+.profile-header .info {
+    flex-grow: 1;
+}
+
+.profile-header .top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.profile-header .top button {
+    padding: 8px 16px;
+    background-color: #222;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.profile-header .top button:hover {
+    background-color: #444;
+}
+
+.profile-header .stats {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 8px;
+}
+
+.profile-header .desc h2 {
+    margin: 0;
+}
+
+.profile-header .desc p {
+    color: #666;
+    font-size: 14px;
+}
+
+/* 스토리 */
+.stories {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.story {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.story .circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: #aaa;
+}
+
+.story span {
+    font-size: 12px;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-bottom: 16px;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 16px;
+}
+
+.tabs .tab-button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #999; /* 기본은 회색 */
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px;
+}
+
+/* 클릭된(현재 활성) 탭만 검정색 */
+.tabs .tab-button.active {
+    color: #000;
+    font-weight: 600;
+}
+
+/* hover 효과 제거 → 회색 유지 */
+.tabs .tab-button:hover {
+    color: #000000;
+}
+
+/* 게시물 그리드 */
+.post-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.post {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.post img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.post-content {
+    margin-top: 8px;
+}
+
+.post-content p {
+    margin: 4px 0;
+}
+
+.userId {
+    display: inline-flex;
+    align-items: center;
+    background-color: #efefef;
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.post-empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 0;
+}
+
+.empty-content {
+    text-align: center;
+    color: #333;
+}
+
+.empty-content i {
+    font-size: 48px;
+    color: #999;
+    margin-bottom: 16px;
+}
+
+.empty-content h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.empty-content p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+.empty-content .share-btn {
+    color: #0095f6;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.empty-content .share-btn:hover {
+    text-decoration: underline;
+}
+
+.edit_a {
+    padding: 8px 16px;
+    background-color: #222;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 420;
+    letter-spacing: 0.3px;
+    display: inline-block;
+    transition: background-color 0.2s ease;
+}
+
+.edit_a:hover {
+    background-color: #333;
+}
