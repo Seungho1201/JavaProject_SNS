@@ -88,6 +88,7 @@ public class MyPageController {
             User u = optionalUser.get();
             u.setUserProfileMessage(profile); // 소개(프로필 메시지) 업데이트
             userRepository.save(u);           // DB에 저장
+            ((MyUserDetailsService.CustomUser) auth.getPrincipal()).userProfileMessage = profile;       // auth 정보 업데이트 / 안할 시에 수정해도 수정 전 값 출력
         }
 
         // 수정 후 다시 edit-profile 페이지로 리다이렉션

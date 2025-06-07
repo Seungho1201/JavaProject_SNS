@@ -79,7 +79,7 @@
                 <div class="post" th:each="post : ${userPost}">
                     <img src="https://placehold.co/300" alt="Post">
                     <div class="post-content">
-                        <p th:text="${post.postContent}">내용</p>
+                        <p th:text="${post.content}">내용</p>
                         <p th:text="'추천 : ' + ${post.postRecommend}">추천</p>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                 <div class="post" th:each="post : ${userPost}">
                     <img src="https://placehold.co/300" alt="Tagged Post">
                     <div class="post-content">
-                        <p th:text="${post.postContent}">내용</p>
+                        <p th:text="${post.content}">내용</p>
                         <p th:text="'추천 : ' + ${post.postRecommend}">추천</p>
                     </div>
                 </div>
@@ -116,7 +116,7 @@
                 <div class="post" th:each="post : ${userPost}">
                     <img src="https://placehold.co/300" alt="Saved Post">
                     <div class="post-content">
-                        <p th:text="${post.postContent}">내용</p>
+                        <p th:text="${post.content}">내용</p>
                         <p th:text="'추천 : ' + ${post.postRecommend}">추천</p>
                     </div>
                 </div>
