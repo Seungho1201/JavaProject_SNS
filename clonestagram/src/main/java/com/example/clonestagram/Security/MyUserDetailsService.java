@@ -46,6 +46,7 @@ public class MyUserDetailsService implements UserDetailsService {
         customUser.userId = user.getUserId();
         customUser.userName = user.getUserName();
         customUser.userProfile = user.getUserProfile();
+        customUser.userProfileMessage = user.getUserProfileMessage();       // 유저 상태메시지? 가져오기 위해 추가
 
         return customUser;
     }
@@ -56,6 +57,7 @@ public class MyUserDetailsService implements UserDetailsService {
         public String userId;
         public String userProfile;
         public String userName;
+        public String userProfileMessage;
 
         public CustomUser(String username,
                           String password,

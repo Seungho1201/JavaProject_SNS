@@ -74,4 +74,21 @@ public class UserController {
         return "mypage";
     }
 
+    // 정보 수정 페이지
+    @GetMapping("/editprofile")
+    public String editprofile(Model model, Authentication auth) {
+
+        // 로그인 안 된 경우 로그인 페이지로 리디렉션
+        if (auth == null) return "login";
+
+        // 로그인한 사용자 정보 가져오기
+        MyUserDetailsService.CustomUser user = (MyUserDetailsService.CustomUser) auth.getPrincipal();
+
+        // Entity 사용
+        model.addAttribute("userId", user.userId);
+        model.addAttribute("userName", user.getUsername());
+        model.addAttribute("userProfileMessage", user.userProfileMessage);
+
+        return "editprofile";
+    }
 }

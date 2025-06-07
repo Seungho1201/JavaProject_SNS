@@ -70,4 +70,48 @@ public class MyPageController {
 
         return "mypage";
     }
+
+    // 프로필 수정(POST 요청)
+    @PostMapping("/edit-profile")
+    public String updateProfile(@RequestParam("profile") String profile, Authentication auth) {
+        // 로그인되지 않은 경우 로그인 페이지로 리다이렉션
+        if (auth == null) return "redirect:/login";
+
+        // 현재 로그인한 사용자 정보 가져오기
+        MyUserDetailsService.CustomUser user = (MyUserDetailsService.CustomUser) auth.getPrincipal();
+
+        // DB에서 해당 사용자 엔티티 찾기
+        Optional<User> optionalUser = userRepository.findByUserId(user.userId);
+
+        // 존재할 경우 프로필 메시지를 업데이트하고 저장
+        if (optionalUser.isPresent()) {
+            User u = optionalUser.get();
+            u.setUserProfileMessage(profile); // 소개(프로필 메시지) 업데이트
+            userRepository.save(u);           // DB에 저장
+        }
+
+        // 수정 후 다시 edit-profile 페이지로 리다이렉션
+        return "redirect:/mypage/edit-profile";
+    }
+
+    // 프로필 수정 페이지(GET 요청)
+    @GetMapping("/edit-profile")
+    public String editProfilePage(Model model, Authentication auth) {
+        // 로그인되지 않은 경우 로그인 페이지로 리다이렉션
+        if (auth == null) return "redirect:/login";
+
+        // 현재 로그인한 사용자 정보 가져오기
+        MyUserDetailsService.CustomUser user = (MyUserDetailsService.CustomUser) auth.getPrincipal();
+
+        // 사용자 ID, 이름을 모델에 담기
+        model.addAttribute("userId", user.userId);
+        model.addAttribute("userName", user.getUsername());
+
+        // DB에서 사용자 프로필 메시지 불러와서 모델에 추가
+        Optional<User> optionalUser = userRepository.findByUserId(user.userId);
+        optionalUser.ifPresent(value -> model.addAttribute("userProfileMessage", value.getUserProfileMessage()));
+
+        // editprofile.html 페이지 렌더링
+        return "editprofile";
+    }
 }
