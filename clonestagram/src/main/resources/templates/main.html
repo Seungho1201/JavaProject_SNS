@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/modal.css" />
 </head>
 
 
@@ -19,27 +20,33 @@
 <main class="main">
 
     <aside class="sidebar">
+
+        <div style="margin-top: 41px; margin-left: 12px; margin-bottom: 40px">
+            <img src="/img/logo.png" alt="예시 이미지" style="width: 102px">
+        </div>
+
         <nav class="nav">
+
             <a href="/test" class="nav-item">
-                <i class="fas fa-home"></i><span>홈</span>
+                <i class="fas fa-home"></i><span style="font-size: 17px">홈</span>
             </a>
             <a href="#" class="nav-item">
-                <i class="fas fa-search"></i><span>검색</span>
+                <i class="fas fa-search"></i><span style="font-size: 17px">검색</span>
             </a>
             <a href="#" class="nav-item">
-                <i class="far fa-compass"></i><span>탐색 탭</span>
+                <i class="far fa-compass"></i><span style="font-size: 17px">탐색 탭</span>
             </a>
             <a href="#" class="nav-item">
-                <i class="far fa-play-circle"></i><span>릴스</span>
+                <i class="far fa-play-circle"></i><span style="font-size: 17px">릴스</span>
             </a>
             <a href="#" class="nav-item">
-                <i class="far fa-paper-plane"></i><span>메세지</span>
+                <i class="far fa-paper-plane"></i><span style="font-size: 17px">메세지</span>
             </a>
             <a href="#" class="nav-item">
-                <i class="far fa-heart"></i><span>알림</span>
+                <i class="far fa-heart"></i><span style="font-size: 17px">알림</span>
             </a>
             <a href="/write" class="nav-item">
-                <i class="far fa-plus-square"></i><span>만들기</span>
+                <i class="far fa-plus-square"></i><span style="font-size: 17px">만들기</span>
             </a>
             <a href="/mypage" class="nav-item">
                 <img src="https://placehold.co/80" class="profile-img" alt="Story"/><span>프로필</span>
@@ -58,9 +65,13 @@
     <section class="feed">
         <!-- 여기 게시글들 th:each 쓰면 됨-->
         <div  th:each="post : ${posts}" class="postStyle">
+
             <div class="postHeader">
+
+
                 <img src="https://placehold.co/40" class="postProfileStyle">
-                <p th:text="${post.user.userId}">작성 유저 ID</p>
+
+                <p th:text="${post.user.userId}" style="font-weight: bold; margin-left: 10px">작성 유저 ID</p>
                 <p>더보기</p>
 
                 <p th:if="${post.user.userId == loginUserId}">
@@ -80,25 +91,36 @@
             </div>
 
             <div class="postActionButtonStyle">
-                <!-- Likes -->
-                <button class="iconButton">
-                    <i class="far fa-heart"></i>
-                </button>
+                <div style="display: flex; margin-left: -5px">
+                    <!-- Likes -->
+                    <button class="iconButton">
+                        <i class="far fa-heart"></i>
+                    </button>
 
-                <!-- Comment -->
-                <!-- 클릭시 모달창(상세페이지(댓글 포함))을 띄운다-->
-                <button class="iconButton" onclick="openModal()">
-                    <i class="far fa-comment"></i>
-                </button>
+                    <!-- Comment -->
+                    <!-- 클릭시 모달창(상세페이지(댓글 포함))을 띄운다-->
+                    <button class="iconButton"
+                            th:attr="data-post-id=${post.no}"
+                            th:onclick="'openModal(); loadPost(' + ${post.no} + ');'">
+                        <i class="far fa-comment"></i>
+                    </button>
 
-                <!-- DM -->
-                <button class="iconButton">
-                    <i class="far fa-paper-plane"></i>
-                </button>
+                    <!-- DM -->
+                    <button class="iconButton">
+                        <i class="far fa-paper-plane"></i>
+                    </button>
+                </div>
+
+                <!-- 오른쪽 북마크 -->
+                <div>
+                    <button class="iconButtonRight">
+                        <i class="far fa-bookmark"></i>
+                    </button>
+                </div>
             </div>
 
             <div>
-                <p>좋아요 999개</p>
+                <p style="font-weight: bold; font-size: 15px; margin-top: 7px;">좋아요 999개</p>
             </div>
 
             <div>
@@ -158,23 +180,122 @@
 
 
 <script>
+
+
     function openModal() {
+        const commentButtons = document.querySelector('.comment-button');
+
         document.getElementById("commentModal").classList.add("active");
+
         document.body.style.overflow = 'hidden'; // 스크롤 막기
     }
 
     function closeModal() {
         document.getElementById("commentModal").classList.remove("active");
+
         document.body.style.overflow = ''; // 스크롤 원래대로
     }
 
     // 모달 외부 클릭 시 닫기
     window.addEventListener('click', function (e) {
         const modal = document.getElementById("commentModal");
+
         if (e.target === modal) {
             closeModal();
         }
     });
+
+    // AJAX 데이터 요청
+    async function loadPost(postId) {
+        await fetch(`/detail/${postId}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data); // 확인용
+
+                document.getElementById("modalUserId").textContent = data.user.userId;
+                document.getElementById("modalUserId2").textContent = data.user.userId;
+                document.getElementById("modalContent").textContent = data.content;
+                document.getElementById("modalDate").textContent = data.postDate.substring(0, 10);
+                document.getElementById("modalRecommend").textContent = "좋아요 "+ data.postRecommend + "개";
+
+                document.getElementById("postId").textContent = data.no;
+
+            });
+        // 댓글 리스트 가져오기
+        getCommentList();
+    }
+
+    function getCommentList(){
+
+        let postId = document.getElementById("postId").textContent.trim();
+
+        fetch(`/get/commentlist/${postId}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data); // 확인용
+
+                const commentContainer = document.querySelector(".modalComment");
+                commentContainer.innerHTML = ""; // 기존 내용 초기화
+
+                if (data.length === 0) {
+                    commentContainer.innerHTML = "<p style='margin: 10px 0;'>댓글이 아직 없습니다.</p>";
+                    return;
+                }
+
+                // 댓글 리스트 요소 삽입
+                data.forEach(comment => {
+                    const commentEl = document.createElement("div");
+
+                    commentEl.classList.add("commentItem");
+                    commentEl.style.marginBottom = "10px";
+
+                    // 댓글 요소 삽입
+                    commentEl.innerHTML = `
+                        <div style="display: flex; align-items: center; margin-top: 20px">
+                            <img src="https://placehold.co/30" class="modelProfileImg" style="margin-left: 10px">
+                            <div style="margin-left: 10px">
+                                <p style="margin: 0;"><strong>${comment.user.userId}</strong></p>
+                                <p style="margin: 0;">${comment.commentContent}</p>
+                            </div>
+                        </div> `;
+                    commentContainer.appendChild(commentEl);
+                });
+            })
+    }
+
+    // 댓글 업로드 기능
+    // 모달창에서 사용
+    function commentFunc(){
+
+        let postId = document.getElementById("postId").textContent.trim();
+        let comment = document.getElementById("commentText").value.trim();
+
+        if(comment == ''){
+            alert("데이터를 입력하세요");
+            return;
+        }
+
+        document.getElementById("commentText").value ='';
+
+        fetch('/post/comment', {
+            method: 'POST',           // POST 방식으로 요청 전송
+            headers: { 'Content-Type': 'application/json' },
+            // JSON 데이터로 전송
+            body: JSON.stringify({ postId: postId, commentContent: comment })
+        })
+            .then(res => {
+                if (!res.ok) throw new Error('요청 실패');
+                return res.text(); // 또는 .json() – 서버 응답 형태에 따라
+            })
+            .then(data => {
+                console.log("댓글 저장 성공");
+                getCommentList();
+            })
+            .catch(error => {
+                alert("로그인 하세요");
+                console.error("에러 발생");
+            });
+    }
 </script>
 
 

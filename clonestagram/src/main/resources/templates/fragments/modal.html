@@ -2,59 +2,90 @@
 
 </script>
 
-
 <!-- 모달 오버레이 -->
 <div th:fragment="modalFragment" id="commentModal" class="modal-overlay">
     <div class="modal-content">
 
         <!-- 상세페이지 이미지 -->
-        <div>
+        <div class="imgBack">
             <img src="https://placehold.co/600" class="modalImg">
         </div>
 
-        <!-- 상세페이지 댓글 -->
-        <div class="modalContent">
-            <!-- 상세페이지 헤더 -->
-            <div >
-                <p>작성자</p>
-            </div>
-            <hr>
 
-            <!-- 댓글 영역 -->
-            <div class="modalComment">
-                댓글 들어갈 공간
+        <div class="modalContent">
+
+            <!-- 상세페이지 헤더 -->
+            <div class="modalHeader">
+                <img src="https://placehold.co/45" class="modelProfileImg">
+                <p id="modalUserId">작성자</p>
+                <p id="postId" style="display: none"> 게시글 기본키 값</p>
+
+                <!-- 점 세 개 아이콘 -->
+                <div class="menuIcon">
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
             </div>
+
+            <!-- 게시글과 댓글영역 -->
+            <div style="overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none;">
+
+                <div class="modalDetailContent" >
+                    <img src="https://placehold.co/45" class="modelProfileImg">
+                    <p id="modalUserId2" style="font-weight: bold;">작성자</p>
+                </div>
+
+                <div class="modalDetailContent2">
+                    <p id="modalContent">게시글 내용</p>
+                    <p id="modalDate" style="font-size: 14px; color: #9ca3af">날짜</p>
+                </div>
+
+
+                <!-- 댓글 영역 -->
+                <div class="modalComment">
+                    댓글 들어갈 공간
+                </div>
+
+            </div>
+
 
             <!-- 하단 영역 -->
-            <div class="postActionButtonStyle">
-                <!-- Likes -->
-                <button class="iconButton">
-                    <i class="far fa-heart"></i>
-                </button>
+            <div class="modalBottomIcon">
+                <!-- 왼쪽 아이콘들 -->
+                <div style="display: flex;" class="leftIcons">
+                    <button class="iconButton">
+                        <i class="far fa-heart"></i>
+                    </button>
 
-                <!-- Comment -->
-                <!-- 클릭시 모달창(상세페이지(댓글 포함))을 띄운다-->
-                <button class="iconButton">
-                    <i class="far fa-comment"></i>
-                </button>
+                    <button class="iconButton">
+                        <i class="far fa-comment"></i>
+                    </button>
 
-                <!-- DM -->
-                <button class="iconButton">
-                    <i class="far fa-paper-plane"></i>
-                </button>
+                    <button class="iconButton">
+                        <i class="far fa-paper-plane"></i>
+                    </button>
+                </div>
+
+                <!-- 오른쪽 북마크 -->
+                <div>
+                    <button class="iconButton" >
+                        <i class="far fa-bookmark"></i>
+                    </button>
+                </div>
             </div>
 
-            <p>좋아요 000개</p>
+            <div class="modalBottomLikesCount">
+                <p id="modalRecommend" style="font-weight: bold">좋아요 수</p>
+            </div>
 
-            <hr>
-            <div>
-                <p>댓글달기</p>
+
+
+            <div class="commentInputContainer">
+                <i class="far fa-smile emojiIcon" style="font-size: 24px"></i>
+                <input type="text" id="commentText" placeholder="댓글 달기...">
+                <button onclick="commentFunc()">게시</button>
             </div>
 
         </div>
-
     </div>
 </div>
-
-
 

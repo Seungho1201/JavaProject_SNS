@@ -1,29 +1,17 @@
-package com.example.clonestagram.Entity;
+package com.example.clonestagram.Dto.Response;
 
-import jakarta.persistence.*;
+import com.example.clonestagram.Entity.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
-@Entity
 @Getter
 @Setter
-public class Post {
-    @Id
-    @GeneratedValue
+public class PostResponseDto {
     private Long no;
-
-    @ManyToOne
-    @JoinColumn(name="user_id")
     private User user;
-
     private String content;
-    private int postRecommend = 0;
+    private int postRecommend;
     private String postImg;
-
-    @CreationTimestamp
     private String postDate;
-
-
-
 }
