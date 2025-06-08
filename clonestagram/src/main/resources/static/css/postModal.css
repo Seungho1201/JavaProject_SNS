@@ -1,0 +1,38 @@
+.postModal-overlay {
+    display: flex; /* 항상 flex로 두고, visibility와 opacity로 제어 */
+    visibility: hidden;
+    opacity: 0;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+
+    transform: scale(0.95);
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+}
+
+.postModal-overlay.active {
+    visibility: visible;
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* 모달 내부 콘텐츠 애니메이션 */
+.postModal-content {
+    background: white;
+    width: 400px;
+    height: 432px;
+    position: relative;
+    border-radius: 20px;
+
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.postModal-overlay.active .postModal-content {
+    opacity: 1;
+    transform: translateY(0);
+}
