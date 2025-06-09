@@ -8,6 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/modal.css" />
+    <link rel="stylesheet" href="/css/postModal.css" />
 </head>
 
 
@@ -62,25 +63,34 @@
     </aside>
 
 
+
     <section class="feed">
         <!-- 여기 게시글들 th:each 쓰면 됨-->
         <div  th:each="post : ${posts}" class="postStyle">
 
             <div class="postHeader">
 
+                <div style="display: flex; align-items: center;">
+                    <img src="https://placehold.co/40" class="postProfileStyle">
 
-                <img src="https://placehold.co/40" class="postProfileStyle">
+                    <p th:text="${post.user.userId}" style="font-weight: bold; margin-left: 10px">작성 유저 ID</p>
 
-                <p th:text="${post.user.userId}" style="font-weight: bold; margin-left: 10px">작성 유저 ID</p>
-                <p>더보기</p>
+                    <p th:if="${post.user.userId == loginUserId}">
+                        <a th:href="@{'/edit/' + ${post.no}}">[수정]</a>
+                    </p>
 
-                <p th:if="${post.user.userId == loginUserId}">
-                    <a th:href="@{'/edit/' + ${post.no}}">[수정]</a>
-                </p>
+                    <p th:if="${post.user.userId == loginUserId}">
+                        <a th:href="@{'/delete/' + ${post.no}}">[삭제]</a>
+                    </p>
 
-                <p th:if="${post.user.userId == loginUserId}">
-                    <a th:href="@{'/delete/' + ${post.no}}">[삭제]</a>
-                </p>
+                    <!-- 게시글의 기본키를 가져오기 위한 속성-->
+                    <p th:text="${post.no}" id="postId" style="display: none"> [기본키] </p>
+                </div>
+
+                <!-- 점 세 개 아이콘 -->
+                <div style="cursor: pointer;" th:onclick="'openPostModal(); test(' + ${post.no} + ');'">
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
 
 
             </div>
@@ -177,9 +187,42 @@
 <!-- 모달 삽입 -->
 <div th:replace="~{fragments/modal :: modalFragment}"></div>
 
+<div th:replace="~{fragments/postModal :: modalFragment}"></div>
+
 
 
 <script>
+
+    function test(postId){
+        console.log(postId);
+
+        document.getElementById("postModalId").textContent = postId;
+
+    }
+
+    function openPostModal() {
+
+
+
+        document.getElementById("postModal").classList.add("active");
+        document.body.style.overflow = 'hidden'; // 스크롤 막기
+    }
+
+    function closePostModal() {
+        document.getElementById("postModal").classList.remove("active");
+
+        document.body.style.overflow = ''; // 스크롤 원래대로
+    }
+
+    // 모달 외부 클릭 시 닫기
+    window.addEventListener('click', function (e) {
+        const modal = document.getElementById("postModal");
+
+        if (e.target === modal) {
+            closePostModal();
+        }
+    });
+
 
 
     function openModal() {

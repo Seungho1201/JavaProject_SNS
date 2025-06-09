@@ -118,17 +118,23 @@ html, body {
     margin-left: 54px;
     width : 470px;
 
+
 }
 
 .postHeader{
     display: flex;
     align-items: center;
+
+
+    justify-content: space-between;
 }
 
 .postProfileStyle{
     width: 40px;
     height: 40px;
     border-radius: 50%;
+
+
 }
 
 .postImg{
