@@ -42,7 +42,8 @@
                     </div>
 
                     <!-- 입력 로직 -->
-                    <form method="post" action="write">
+                    <form method="post" action="write" enctype="multipart/form-data">
+                        <input type="file" name="file" accept="image/*">
                         <input type="text" name="content"  placeholder="Write a caption..." style="height: 200px; width: 300px">
 
                         <input type="submit" class="submit-button">

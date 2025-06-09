@@ -96,7 +96,7 @@
             </div>
 
             <div class="">
-                <img src="https://placehold.co/400" class="postImg">
+                <img th:src="@{${post.postImg}}" class="postImg">
 
             </div>
 
@@ -258,6 +258,7 @@
                 document.getElementById("modalUserId").textContent = data.user.userId;
                 document.getElementById("modalUserId2").textContent = data.user.userId;
                 document.getElementById("modalContent").textContent = data.content;
+                document.getElementById("modalImg").src = data.postImg;
                 document.getElementById("modalDate").textContent = data.postDate.substring(0, 10);
                 document.getElementById("modalRecommend").textContent = "좋아요 "+ data.postRecommend + "개";
 
