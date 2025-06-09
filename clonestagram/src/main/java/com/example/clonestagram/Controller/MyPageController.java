@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/mypage")
@@ -70,28 +74,46 @@ public class MyPageController {
 
         return "mypage";
     }
-
-    // 프로필 수정(POST 요청)
     @PostMapping("/edit-profile")
-    public String updateProfile(@RequestParam("profile") String profile, Authentication auth) {
-        // 로그인되지 않은 경우 로그인 페이지로 리다이렉션
+    public String updateProfile(@RequestParam("profile") String profile,
+                                Authentication auth,
+                                @RequestParam(value = "profileImg", required = false) MultipartFile profileImg)
+            throws IOException {
+        // 로그인되지 않은 경우 로그인 페이지로 이동
         if (auth == null) return "redirect:/login";
 
         // 현재 로그인한 사용자 정보 가져오기
         MyUserDetailsService.CustomUser user = (MyUserDetailsService.CustomUser) auth.getPrincipal();
-
-        // DB에서 해당 사용자 엔티티 찾기
         Optional<User> optionalUser = userRepository.findByUserId(user.userId);
 
-        // 존재할 경우 프로필 메시지를 업데이트하고 저장
         if (optionalUser.isPresent()) {
             User u = optionalUser.get();
-            u.setUserProfileMessage(profile); // 소개(프로필 메시지) 업데이트
-            userRepository.save(u);           // DB에 저장
-            ((MyUserDetailsService.CustomUser) auth.getPrincipal()).userProfileMessage = profile;       // auth 정보 업데이트 / 안할 시에 수정해도 수정 전 값 출력
+
+            // 소개글 업데이트
+            u.setUserProfileMessage(profile);
+
+            // 프로필 이미지 업로드 처리
+            if (profileImg != null && !profileImg.isEmpty()) {
+                // 외부 저장 경로: /uploads/profileImg/
+                String uploadDir = System.getProperty("user.dir") + "/uploads/profileImg";
+                File dir = new File(uploadDir);
+                if (!dir.exists()) dir.mkdirs();
+
+                String fileName = UUID.randomUUID() + "_" + profileImg.getOriginalFilename();
+                File target = new File(dir, fileName);
+                profileImg.transferTo(target);
+
+                // 저장 경로를 웹에서 접근 가능한 경로로 저장
+                String webPath = "/uploads/profileImg/" + fileName;
+                u.setUserProfile(webPath);
+                user.userProfile = webPath; // 현재 세션에도 반영
+            }
+
+            // DB 저장 및 세션 갱신
+            userRepository.save(u);
+            user.userProfileMessage = profile;
         }
 
-        // 수정 후 다시 edit-profile 페이지로 리다이렉션
         return "redirect:/mypage/edit-profile";
     }
 

@@ -15,8 +15,8 @@ public class FileService {
             return null;
         }
 
-        // 저장 경로: static/img/
-        String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/postImg";
+        // ✅ 외부 경로에 저장 (프로젝트 루트/uploads/postImg)
+        String uploadDir = System.getProperty("user.dir") + "/uploads/postImg";
         File dir = new File(uploadDir);
 
         if (!dir.exists()) dir.mkdirs();  // 폴더 없으면 생성
@@ -28,7 +28,7 @@ public class FileService {
         // 저장
         file.transferTo(target);
 
-        // 웹 브라우저에 보여줄 경로
-        return "/postImg/" + fileName;
+        // ✅ 브라우저에 보여줄 경로는 "/uploads/postImg/파일명"
+        return "/uploads/postImg/" + fileName;
     }
 }

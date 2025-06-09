@@ -25,6 +25,10 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests((authorize) ->
                 authorize.requestMatchers("/**").permitAll()
+                        .requestMatchers("/uploads/**").permitAll()  // ✅ 이 줄 추가
+                        .requestMatchers("/css/**", "/js/**", "/img/**", "/static/**").permitAll()  // 정적 리소스
+                        .requestMatchers("/", "/login", "/register", "/error").permitAll()         // 공용 페이지
+
         );
 
         // form으로 로그인 하겟다는 뜻

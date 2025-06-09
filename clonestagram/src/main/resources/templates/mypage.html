@@ -33,14 +33,16 @@
                 <i class="far fa-plus-square"></i><span>만들기</span>
             </a>
             <a href="/mypage" class="nav-item">
-                <img src="https://placehold.co/80" class="profile-img" alt="Story"/><span>프로필</span>
+                <img th:src="@{${userProfile != null ? userProfile : '/img/default-profile.png'}}" class="profile-img" alt="Story"
+                     style="width: 25px; height: 25px; border-radius: 50%;"/><span>프로필</span>
             </a>
         </nav>
     </aside>
 
     <main class="profile">
         <section class="profile-header">
-            <img src="https://placehold.co/100" alt="Profile Picture">
+            <img th:src="@{${userProfile != null ? userProfile : '/img/default-profile.png'}}"
+                 alt="Profile Picture">
             <div class="info">
                 <div class="top">
                     <h1 th:text="${userName}">유저 이름</h1>
