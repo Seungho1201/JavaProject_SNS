@@ -96,10 +96,6 @@ public class PostController {
         Post post = postOpt.get();
         model.addAttribute("post", post);
         return "edit";
-
-
-
-
     }
 
 
@@ -132,6 +128,7 @@ public class PostController {
 
         return "redirect:/main";
     }
+
 
     @GetMapping("/delete/{postId}")
     public String delete(@PathVariable Long postId ,Authentication auth, Model model) {
@@ -172,6 +169,7 @@ public class PostController {
 
         //return Map.of("content", post.get().getContent());
     }
+
 
 
 
