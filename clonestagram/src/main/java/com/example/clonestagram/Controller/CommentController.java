@@ -57,6 +57,7 @@ public class CommentController {
         return ResponseEntity.ok().build();
     }
 
+
     //ResponseEntity<List<CommentResponseDTO>>
     @GetMapping("/get/commentlist/{id}")
     public ResponseEntity<?> getCommentList(@PathVariable Long id) {

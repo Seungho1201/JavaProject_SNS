@@ -39,16 +39,22 @@
         </aside>
 
         <main class="edit-profile-area">
-            <div class="profile-summary-box">
+            <form th:action="@{/mypage/edit-profile}" method="post" enctype="multipart/form-data" class="edit-form">
+
+                <div class="profile-summary-box">
                 <img src="https://placehold.co/60" alt="프로필 이미지" class="profile-image">
                 <div class="profile-text">
                     <p class="profile-id" th:text="${userId}">아이디</p>
                     <p class="profile-name" th:text="${userName}">비밀번호</p>
                 </div>
-                <button class="change-photo-btn">사진 변경</button>
+                    <!-- 실제 파일 input -->
+                    <input type="file" name="profileImg" id="profileImgInput" accept="image/*" style="display: none;">
+
+                    <!-- 사용자용 버튼 -->
+                    <button type="button" class="change-photo-btn" onclick="document.getElementById('profileImgInput').click();">사진 변경</button>
             </div>
 
-            <form th:action="@{/mypage/edit-profile}" method="post" class="edit-form">
+
                 <div class="form-group">
                     <label for="website">웹사이트</label>
                     <input type="text" id="website" placeholder="웹사이트" disabled>

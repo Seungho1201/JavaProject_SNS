@@ -67,6 +67,7 @@ public class UserController {
         // Entity 사용
         model.addAttribute("userId", user.userId);
         model.addAttribute("userName", user.getUsername());
+        model.addAttribute("userProfile", user.userProfile);
 
         // 게시글 정보
         // model.addAttribute("userPost", postRepository.findByPostUserId(user.userId));
@@ -88,6 +89,7 @@ public class UserController {
         model.addAttribute("userId", user.userId);
         model.addAttribute("userName", user.getUsername());
         model.addAttribute("userProfileMessage", user.userProfileMessage);
+        model.addAttribute("userProfileImg", user.userProfile);
 
         return "editprofile";
     }

@@ -18,62 +18,90 @@
 <div class="story">
     스토리 만들거임
 </div>
-<main class="main">
 
+<main class="main">
+    <!-- 좌측 사이드 메뉴바 -->
     <aside class="sidebar">
 
+        <!--로고 아이콘-->
         <div style="margin-top: 41px; margin-left: 12px; margin-bottom: 40px">
             <img src="/img/logo.png" alt="예시 이미지" style="width: 102px">
         </div>
 
         <nav class="nav">
-
+            <!-- 홈 아이콘 -->
             <a href="/test" class="nav-item">
                 <i class="fas fa-home"></i><span style="font-size: 17px">홈</span>
             </a>
+
+            <!-- 검색 아이콘 -->
             <a href="#" class="nav-item">
-                <i class="fas fa-search"></i><span style="font-size: 17px">검색</span>
+                <i class="fas fa-search"></i>
+                <span style="font-size: 17px">검색</span>
             </a>
+
+            <!-- 탐색 아이콘 -->
             <a href="#" class="nav-item">
-                <i class="far fa-compass"></i><span style="font-size: 17px">탐색 탭</span>
+                <i class="far fa-compass"></i>
+                <span style="font-size: 17px">탐색 탭</span>
             </a>
+
+            <!-- 릴스 아이콘 -->
             <a href="#" class="nav-item">
-                <i class="far fa-play-circle"></i><span style="font-size: 17px">릴스</span>
+                <i class="far fa-play-circle"></i>
+                <span style="font-size: 17px">릴스</span>
             </a>
+
+            <!-- 메세지 아이콘 -->
             <a href="#" class="nav-item">
-                <i class="far fa-paper-plane"></i><span style="font-size: 17px">메세지</span>
+                <i class="far fa-paper-plane"></i>
+                <span style="font-size: 17px">메세지</span>
             </a>
+
+            <!-- 알림 아이콘 -->
             <a href="#" class="nav-item">
-                <i class="far fa-heart"></i><span style="font-size: 17px">알림</span>
+                <i class="far fa-heart"></i>
+                <span style="font-size: 17px">알림</span>
             </a>
+
+            <!-- 게시글 작성 아이콘 -->
             <a href="/write" class="nav-item">
-                <i class="far fa-plus-square"></i><span style="font-size: 17px">만들기</span>
+                <i class="far fa-plus-square"></i>
+                <span style="font-size: 17px">만들기</span>
             </a>
+
+            <!-- 마이페이지 아이콘 -->
             <a href="/mypage" class="nav-item">
-                <img src="https://placehold.co/80" class="profile-img" alt="Story"/><span>프로필</span>
+                <!-- 유저 아이콘 null(설정안함)일시 기본 아이콘으로 -->
+                <img th:src="@{${user.userProfile != null ? user.userProfile : '/img/default-profile.png'}}"
+                     class="profile-img" alt="Story" style="margin-left: -5px"/>
+                <span style="font-size: 17px">프로필</span>
             </a>
         </nav>
 
+        <!-- 더보기 -->
         <div class="more-menu">
             <a href="#" class="nav-item">
-                <i class="fas fa-bars"></i><span>More</span>
+                <i class="fas fa-bars"></i><span>더보기</span>
             </a>
         </div>
-
     </aside>
 
 
-
+    <!-- 게시글(피드) 영역 -->
     <section class="feed">
         <!-- 여기 게시글들 th:each 쓰면 됨-->
-        <div  th:each="post : ${posts}" class="postStyle">
+        <div  th:each="post : ${posts}" class="postStyle" th:attr="id='post-' + ${post.no}">
 
+            <!-- 상단 헤더 -->
             <div class="postHeader">
-
                 <div style="display: flex; align-items: center;">
-                    <img src="https://placehold.co/40" class="postProfileStyle">
+                    <!-- 유저 아이콘 null(설정안함)일시 기본 아이콘으로 -->
+                    <img th:src="@{${post.user.userProfile != null ? post.user.userProfile : '/img/default-profile.png'}}"
+                         class="postProfileStyle">
 
-                    <p th:text="${post.user.userId}" style="font-weight: bold; margin-left: 10px">작성 유저 ID</p>
+                    <p th:text="${post.user.userId}" style="font-weight: bold; font-size: 15px; margin-left: 10px">작성 유저 ID</p>
+
 
                     <p th:if="${post.user.userId == loginUserId}">
                         <a th:href="@{'/edit/' + ${post.no}}">[수정]</a>
@@ -83,27 +111,29 @@
                         <a th:href="@{'/delete/' + ${post.no}}">[삭제]</a>
                     </p>
 
-                    <!-- 게시글의 기본키를 가져오기 위한 속성-->
+                    <!-- 게시글의 기본키를 가져오기 위한 속성 보이지는 않게-->
                     <p th:text="${post.no}" id="postId" style="display: none"> [기본키] </p>
                 </div>
 
-                <!-- 점 세 개 아이콘 -->
+                <!-- 우측 점 세 개 아이콘 -->
                 <div style="cursor: pointer;" th:onclick="'openPostModal(); test(' + ${post.no} + ');'">
                     <i class="fas fa-ellipsis-h"></i>
                 </div>
+            </div>
 
+            <!-- 게시글 이미지 영역 -->
+            <div>
+                <img th:src="@{${post.postImg}}" class="postImg">
 
             </div>
 
-            <div class="">
-                <img src="https://placehold.co/400" class="postImg">
-
-            </div>
-
+            <!-- 이미지 아래 아이콘 버튼들 -->
             <div class="postActionButtonStyle">
                 <div style="display: flex; margin-left: -5px">
+
                     <!-- Likes -->
-                    <button class="iconButton">
+                    <!-- 클릭시 좋아요 카운트 -->
+                    <button class="iconButton" th:onclick="' recommendFunc(' + ${post.no} + ');'">
                         <i class="far fa-heart"></i>
                     </button>
 
@@ -129,31 +159,36 @@
                 </div>
             </div>
 
-            <div>
-                <p style="font-weight: bold; font-size: 15px; margin-top: 7px;">좋아요 999개</p>
+            <!-- 좋아요 수 -->
+            <div >
+                <p class="like-count" th:text="'좋아요 ' + ${post.postRecommend} + '개'" style="font-weight: bold; font-size: 15px; margin-top: 7px;">좋아요 999개</p>
             </div>
 
+            <!-- 게시글 본문 내용 -->
             <div>
                 <p th:text="${post.content}">내용</p>
             </div>
+
             <hr>
         </div>
     </section>
-
 
     <!-- 우측 사이드바 -->
     <aside class="right-sidebar">
 
         <div class="right-sidebar-wrapper">
             <div class="right-sidebar">
+
                 <div class="sidebar-user-info">
-                    <img src="https://placehold.co/80" alt="Profile" />
+                    <img th:src="@{${user.userProfile != null ? user.userProfile : '/img/default-profile.png'}}"
+                         alt="Profile" />
+
                     <div>
-                        <h3 >유저 이름</h3>
-                        <p >유저아이디</p>
+                        <h3 th:text="${user.userName}">유저 이름</h3>
+                        <p th:text="${user.userId}">유저아이디</p>
                     </div>
                     <a href="/logout">
-                        <button class="logout-button">Logout</button>
+                        <button class="logout-button">전환</button>
                     </a>
                 </div>
 
@@ -163,21 +198,35 @@
                     </div>
 
                     <div class="suggestion-item">
-                        <img src="https://placehold.co/80" alt="Suggestion" />
+                        <img src="/img/default-profile.png" alt="Suggestion" />
                         <div class="flex-1">
-                            <h4>추천유저 ID</h4>
+                            <h4>추천유저 1</h4>
                         </div>
-                        <button class="follow-button">Follow</button>
+                        <button class="follow-button">팔로우</button>
+                    </div>
+
+                    <div class="suggestion-item">
+                        <img src="/img/default-profile.png" alt="Suggestion" />
+                        <div class="flex-1">
+                            <h4>추천유저 2</h4>
+                        </div>
+                        <button class="follow-button">팔로우</button>
+                    </div>
+
+                    <div class="suggestion-item">
+                        <img src="/img/default-profile.png" alt="Suggestion" />
+                        <div class="flex-1">
+                            <h4>추천유저 3</h4>
+                        </div>
+                        <button class="follow-button">팔로우</button>
                     </div>
                 </div>
 
                 <footer class="sidebar-footer">
                     <nav>
-                        <ul>
-                            <li>오승호, 김용빈, 김수길 제작</li>
-                        </ul>
+                        <p>오승호, 김용빈, 김수길 제작</p>
+                        <p>© 2025 Java Framework Final Project</p>
                     </nav>
-                    <p>Java Framework Final Project</p>
                 </footer>
             </div>
         </div>
@@ -193,24 +242,92 @@
 
 <script>
 
-    function test(postId){
+    // 추천 userlikes 로직 ==================================================
+
+    // 추천 AJAX
+    function recommendFunc(postId){
+
+        //console.log(postId)
+
+        fetch(`/post/recommend/${postId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({})
+        })
+            // 응답 데이터
+            .then(response => {
+                if (!response.ok) {
+                    // 에러시 취소 로직
+                    // 이미 추천한 경우 or 예외의 경우 에러 발생하기 떄문
+                    cancelRecommend(postId);
+
+                    throw new Error("추천 요청 실패 or 추천 취소");
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log("추천 완료!");
+
+                // 요소 가져와서 증가
+                const postElement = document.querySelector(`#post-${postId}`);
+                const likeCountElement = postElement.querySelector('.like-count');
+                let currentCount = parseInt(likeCountElement.textContent.replace(/[^0-9]/g, ""));
+
+                likeCountElement.textContent = `좋아요 ${currentCount + 1}개`;
+            })
+            .catch(error => {
+                console.error("에러 발생:", error.message);
+            });
+    }
+
+    // 추천 취소 AJAX
+    // 추천 로직에서 에러 발생시 처리한다
+    function cancelRecommend(postId){
         console.log(postId);
 
+        // AJAX 요청
+        fetch(`/post/cancel/recommend/${postId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({})
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("에러 발생");
+                }
+                return response.text();  // void 리턴이면 필요 없음
+            })
+            .then(data => {
+                console.log("좋아요 취소 완료");
+
+                // 요소 가져와서 추천수 감소
+                const postElement = document.querySelector(`#post-${postId}`);
+                const likeCountElement = postElement.querySelector('.like-count');
+                let currentCount = parseInt(likeCountElement.textContent.replace(/[^0-9]/g, ""));
+
+                likeCountElement.textContent = `좋아요 ${currentCount - 1}개`;
+            })
+    }
+
+    // ===========================================================================
+
+    function test(postId){
+        console.log(postId);
         document.getElementById("postModalId").textContent = postId;
 
     }
 
     function openPostModal() {
-
-
-
         document.getElementById("postModal").classList.add("active");
         document.body.style.overflow = 'hidden'; // 스크롤 막기
     }
 
     function closePostModal() {
         document.getElementById("postModal").classList.remove("active");
-
         document.body.style.overflow = ''; // 스크롤 원래대로
     }
 
@@ -258,6 +375,11 @@
                 document.getElementById("modalUserId").textContent = data.user.userId;
                 document.getElementById("modalUserId2").textContent = data.user.userId;
                 document.getElementById("modalContent").textContent = data.content;
+
+                document.getElementById("modelProfileImg").src = data.user.userProfile;
+                document.getElementById("modelProfileImg2").src = data.user.userProfile;
+                document.getElementById("modalImg").src = data.postImg;
+
                 document.getElementById("modalDate").textContent = data.postDate.substring(0, 10);
                 document.getElementById("modalRecommend").textContent = "좋아요 "+ data.postRecommend + "개";
 
@@ -295,7 +417,8 @@
                     // 댓글 요소 삽입
                     commentEl.innerHTML = `
                         <div style="display: flex; align-items: center; margin-top: 20px">
-                            <img src="https://placehold.co/30" class="modelProfileImg" style="margin-left: 10px">
+                              <img src="${comment.user.userProfile ? comment.user.userProfile : '/img/default-profile.png'}"
+             class="modelProfileImg" style="margin-left: 10px">
                             <div style="margin-left: 10px">
                                 <p style="margin: 0;"><strong>${comment.user.userId}</strong></p>
                                 <p style="margin: 0;">${comment.commentContent}</p>
