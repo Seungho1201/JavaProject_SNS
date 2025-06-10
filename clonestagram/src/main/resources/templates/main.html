@@ -220,6 +220,22 @@
                         </div>
                         <button class="follow-button">팔로우</button>
                     </div>
+
+                    <div class="suggestion-item">
+                        <img src="/img/default-profile.png" alt="Suggestion" />
+                        <div class="flex-1">
+                            <h4>추천유저 4</h4>
+                        </div>
+                        <button class="follow-button">팔로우</button>
+                    </div>
+
+                    <div class="suggestion-item">
+                        <img src="/img/default-profile.png" alt="Suggestion" />
+                        <div class="flex-1">
+                            <h4>추천유저 5</h4>
+                        </div>
+                        <button class="follow-button">팔로우</button>
+                    </div>
                 </div>
 
                 <footer class="sidebar-footer">
@@ -242,7 +258,20 @@
 
 <script>
 
+    // Scrap로직 ==================================================
+
+    // Scrap로직 ==================================================
+
     // 추천 userlikes 로직 ==================================================
+
+    // 모달창에서 호출용 추천 함수
+    function modalRecommendFunc(){
+        const postId = document.getElementById("postId").textContent.trim();
+        //console.log(postId);
+
+        recommendFunc(postId);
+    }
+
 
     // 추천 AJAX
     function recommendFunc(postId){
@@ -323,12 +352,12 @@
 
     function openPostModal() {
         document.getElementById("postModal").classList.add("active");
-        document.body.style.overflow = 'hidden'; // 스크롤 막기
+        //document.body.style.overflow = 'hidden'; // 스크롤 막기
     }
 
     function closePostModal() {
         document.getElementById("postModal").classList.remove("active");
-        document.body.style.overflow = ''; // 스크롤 원래대로
+        //document.body.style.overflow = ''; // 스크롤 원래대로
     }
 
     // 모달 외부 클릭 시 닫기
@@ -347,13 +376,13 @@
 
         document.getElementById("commentModal").classList.add("active");
 
-        document.body.style.overflow = 'hidden'; // 스크롤 막기
+        //document.body.style.overflow = 'hidden'; // 스크롤 막기
     }
 
     function closeModal() {
         document.getElementById("commentModal").classList.remove("active");
 
-        document.body.style.overflow = ''; // 스크롤 원래대로
+       // document.body.style.overflow = ''; // 스크롤 원래대로
     }
 
     // 모달 외부 클릭 시 닫기
