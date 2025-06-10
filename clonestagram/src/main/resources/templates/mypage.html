@@ -9,43 +9,80 @@
 </head>
 <body>
 <div class="container">
+    <!-- 좌측 사이드 메뉴바 -->
     <aside class="sidebar">
-        <nav>
+
+        <!--로고 아이콘-->
+        <div style="margin-top: -79px; margin-left: 12px; margin-bottom: 40.65px">
+            <img src="/img/logo.png" alt="예시 이미지" style="width: 102px">
+        </div>
+
+        <nav class="nav" style="gap: 0.43em">
+            <!-- 홈 아이콘 -->
             <a href="/main" class="nav-item">
-                <i class="fas fa-home"></i><span>홈</span>
+                <i class="fas fa-home"></i><span style="font-size: 17px">홈</span>
             </a>
+
+            <!-- 검색 아이콘 -->
             <a href="#" class="nav-item">
-                <i class="fas fa-search"></i><span>검색</span>
+                <i class="fas fa-search"></i>
+                <span style="font-size: 17px">검색</span>
             </a>
+
+            <!-- 탐색 아이콘 -->
             <a href="#" class="nav-item">
-                <i class="far fa-compass"></i><span>탐색 탭</span>
+                <i class="far fa-compass"></i>
+                <span style="font-size: 17px">탐색 탭</span>
             </a>
+
+            <!-- 릴스 아이콘 -->
             <a href="#" class="nav-item">
-                <i class="far fa-play-circle"></i><span>릴스</span>
+                <i class="far fa-play-circle"></i>
+                <span style="font-size: 17px">릴스</span>
             </a>
+
+            <!-- 메세지 아이콘 -->
             <a href="#" class="nav-item">
-                <i class="far fa-paper-plane"></i><span>메세지</span>
+                <i class="far fa-paper-plane"></i>
+                <span style="font-size: 17px">메세지</span>
             </a>
+
+            <!-- 알림 아이콘 -->
             <a href="#" class="nav-item">
-                <i class="far fa-heart"></i><span>알림</span>
+                <i class="far fa-heart"></i>
+                <span style="font-size: 17px">알림</span>
             </a>
+
+            <!-- 게시글 작성 아이콘 -->
             <a href="/write" class="nav-item">
-                <i class="far fa-plus-square"></i><span>만들기</span>
+                <i class="far fa-plus-square"></i>
+                <span style="font-size: 17px">만들기</span>
             </a>
-            <a href="/mypage" class="nav-item">
-                <img th:src="@{${userProfile != null ? userProfile : '/img/default-profile.png'}}" class="profile-img" alt="Story"
-                     style="width: 25px; height: 25px; border-radius: 50%;"/><span>프로필</span>
+
+            <!-- 마이페이지 아이콘 -->
+            <a href="/mypage/posts" class="nav-item">
+                <!-- 유저 아이콘 null(설정안함)일시 기본 아이콘으로 -->
+                <img th:src="@{${user.userProfile != null ? user.userProfile : '/img/default-profile.png'}}"
+                     class="profile-img" alt="Story" style="margin-left: -3px; border-radius: 50%"/>
+                <span style="font-size: 17px">프로필</span>
             </a>
         </nav>
+
+        <!-- 더보기 -->
+        <div class="more-menu">
+            <a href="#" class="nav-item">
+                <i class="fas fa-bars"></i><span>더보기</span>
+            </a>
+        </div>
     </aside>
 
     <main class="profile">
         <section class="profile-header">
-            <img th:src="@{${userProfile != null ? userProfile : '/img/default-profile.png'}}"
+            <img th:src="@{${user.userProfile != null ? user.userProfile : '/img/default-profile.png'}}"
                  alt="Profile Picture">
             <div class="info">
                 <div class="top">
-                    <h1 th:text="${userName}">유저 이름</h1>
+                    <h1 th:text="${user.userName}">유저 이름</h1>
                     <a href="/editprofile" class="edit_a">프로필 편집</a>
                     <button>보관된 스토리 보기</button>
                 </div>
@@ -55,8 +92,8 @@
                     <div><strong>0</strong> following</div>
                 </div>
                 <div class="desc">
-                    <h2 th:text="${userName}">[사용자이름]</h2>
-                    <h4 class="userId" th:text="${userId}">[사용자아이디]</h4>
+                    <h2 th:text="${user.userName}">[사용자이름]</h2>
+                    <h4 class="userId" th:text="${user.userId}">[사용자아이디]</h4>
                 </div>
             </div>
         </section>
@@ -71,20 +108,25 @@
         <section class="posts">
             <div class="tabs">
                 <a href="/mypage/posts" class="tab-button" th:classappend="${tab eq 'posts'} ? 'active'"><i class="fas fa-th"></i><span> 게시물</span></a>
-                <a href="/mypage/tagged" class="tab-button" th:classappend="${tab eq 'tagged'} ? 'active'"><i class="fas fa-user-tag"></i><span> 저장됨</span></a>
-                <a href="/mypage/saved" class="tab-button" th:classappend="${tab eq 'saved'} ? 'active'"><i class="fas fa-bookmark"></i><span> 태그됨</span></a>
+                <a href="/mypage/saved" class="tab-button" th:classappend="${tab eq 'saved'} ? 'active'"><i class="fas fa-bookmark"></i><span> 저장됨</span></a>
+                <a href="/mypage/tagged" class="tab-button" th:classappend="${tab eq 'tagged'} ? 'active'"><i class="fas fa-user-tag"></i><span> 태그됨</span></a>
+
             </div>
 
             <!-- 내가 올린 게시글 탭 -->
             <!-- 게시물이 있는 경우 -->
             <div class="post-grid" th:if="${tab eq 'posts'} and ${#lists.size(userPost) gt 0}">
+
                 <div class="post" th:each="post : ${userPost}">
-                    <img src="https://placehold.co/300" alt="Post">
+                    <img th:src="@{${post.postImg != null ? post.postImg : '/img/default-profile.png'}}"
+                         alt="Post">
+
                     <div class="post-content">
                         <p th:text="${post.content}">내용</p>
                         <p th:text="'추천 : ' + ${post.postRecommend}">추천</p>
                     </div>
                 </div>
+
             </div>
 
             <!-- 게시물이 없을 경우 -->
@@ -99,30 +141,31 @@
 
 
 
-            <!-- 태그된 게시글 -->
-            <div class="post-grid" th:if="${tab eq 'tagged'} and ${#lists.size(userPost) gt 0}">
-                <div class="post" th:each="post : ${userPost}">
-                    <img src="https://placehold.co/300" alt="Tagged Post">
+            <!-- 저장한 게시글 -->
+            <div class="post-grid" th:if="${tab eq 'saved'} and ${#lists.size(userScraps) gt 0}">
+
+                <div class="post" th:each="post1 : ${userScraps}">
+                    <img th:src="@{${post1.postImg != null ? post1.postImg : '/img/default-profile.png'}}" alt="Saved Post">
                     <div class="post-content">
-                        <p th:text="${post.content}">내용</p>
-                        <p th:text="'추천 : ' + ${post.postRecommend}">추천</p>
+                        <p th:text="${post1.content}">내용</p>
+                        <p th:text="'추천 : ' + ${post1.postRecommend}">추천</p>
                     </div>
                 </div>
             </div>
+
+
+
+            <!-- 태그된 게시글 -->
+            <div class="post-grid" th:if="${tab eq 'tagged'} ">
+
+            </div>
+
             <div class="post-grid post-empty" th:if="${tab eq 'tagged'} and ${#lists.isEmpty(userPost)}">
                 <p>태그된 게시물이 없습니다.</p>
             </div>
 
-            <!-- 저장한 게시글 -->
-            <div class="post-grid" th:if="${tab eq 'saved'} and ${#lists.size(userPost) gt 0}">
-                <div class="post" th:each="post : ${userPost}">
-                    <img src="https://placehold.co/300" alt="Saved Post">
-                    <div class="post-content">
-                        <p th:text="${post.content}">내용</p>
-                        <p th:text="'추천 : ' + ${post.postRecommend}">추천</p>
-                    </div>
-                </div>
-            </div>
+
+
             <div class="post-grid post-empty" th:if="${tab eq 'saved'} and ${#lists.isEmpty(userPost)}">
                 <p>저장한 게시물이 없습니다.</p>
             </div>

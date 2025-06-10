@@ -30,7 +30,7 @@
 
         <nav class="nav">
             <!-- 홈 아이콘 -->
-            <a href="/test" class="nav-item">
+            <a href="/main" class="nav-item">
                 <i class="fas fa-home"></i><span style="font-size: 17px">홈</span>
             </a>
 
@@ -71,7 +71,7 @@
             </a>
 
             <!-- 마이페이지 아이콘 -->
-            <a href="/mypage" class="nav-item">
+            <a href="/mypage/posts" class="nav-item">
                 <!-- 유저 아이콘 null(설정안함)일시 기본 아이콘으로 -->
                 <img th:src="@{${user.userProfile != null ? user.userProfile : '/img/default-profile.png'}}"
                      class="profile-img" alt="Story" style="margin-left: -5px"/>

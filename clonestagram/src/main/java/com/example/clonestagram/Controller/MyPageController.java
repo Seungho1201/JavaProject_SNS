@@ -1,9 +1,13 @@
 package com.example.clonestagram.Controller;
 
+import com.example.clonestagram.Entity.Post;
 import com.example.clonestagram.Entity.User;
+import com.example.clonestagram.Entity.UserScrap;
 import com.example.clonestagram.Repository.PostRepository;
 import com.example.clonestagram.Repository.UserRepository;
+import com.example.clonestagram.Repository.UserScrapRepository;
 import com.example.clonestagram.Security.MyUserDetailsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -16,17 +20,19 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Controller
 @RequestMapping("/mypage")
+@RequiredArgsConstructor
 public class MyPageController {
 
-    @Autowired
-    private PostRepository postRepository;
-    @Autowired
-    private UserRepository userRepository;
+    private final PostRepository postRepository;
+    private final UserRepository userRepository;
+    private final UserScrapRepository userScrapRepository;
 
     // 마이페이지에서 내가 올린 게시물 조회
     @GetMapping("/posts")
@@ -38,10 +44,13 @@ public class MyPageController {
         // 로그인된 사용자 정보 가져오기
         MyUserDetailsService.CustomUser user = (MyUserDetailsService.CustomUser) auth.getPrincipal();
 
-        // 모델에 사용자 정보와 게시물 정보 담기
-        model.addAttribute("userId", user.userId);
-        model.addAttribute("userName", user.getUsername());
-        model.addAttribute("userPost", postRepository.findByUser_UserId(user.userId));      // 내가 쓴 게시글
+        Optional<User> userData = userRepository.findByUserId(user.userId);
+        List<Post> userPost = postRepository.findByUser_UserId(user.userId);
+
+        model.addAttribute("user", userData.get());
+
+
+        model.addAttribute("userPost", userPost);      // 내가 쓴 게시글
         model.addAttribute("tab", "posts");     // 현재 탭 이름
 
         return "mypage";
@@ -50,12 +59,14 @@ public class MyPageController {
     // 마이페이지에서 태그된 게시물 조회(임시)
     @GetMapping("/tagged")
     public String taggedPosts(Model model, Authentication auth) {
+
         if (auth == null) return "redirect:/login";
 
         MyUserDetailsService.CustomUser user = (MyUserDetailsService.CustomUser) auth.getPrincipal();
-        model.addAttribute("userId", user.userId);
-        model.addAttribute("userName", user.getUsername());
-        model.addAttribute("userPost", postRepository.findByUser_UserId(user.userId));
+
+        Optional<User> userData = userRepository.findByUserId(user.userId);
+
+        model.addAttribute("user", userData.get());
         model.addAttribute("tab", "tagged");
 
         return "mypage";
@@ -64,16 +75,29 @@ public class MyPageController {
     // 마이페이지에서 저장한 게시물 조회(임시)
     @GetMapping("/saved")
     public String savedPosts(Model model, Authentication auth) {
+
         if (auth == null) return "redirect:/login";
 
         MyUserDetailsService.CustomUser user = (MyUserDetailsService.CustomUser) auth.getPrincipal();
-        model.addAttribute("userId", user.userId);
-        model.addAttribute("userName", user.getUsername());
-        model.addAttribute("userPost", postRepository.findByUser_UserId(user.userId));
+
+        Optional<User> userData = userRepository.findByUserId(user.userId);
+
+        List<UserScrap> userScraps = userScrapRepository.findByUser(userData.get());
+        List<Post> userScrapPost = new ArrayList<>();
+
+        for (UserScrap userScrap : userScraps) {
+            //System.out.println(userScrap.toString());
+            userScrapPost.add(userScrap.getPost());
+        }
+
+        model.addAttribute("userScraps", userScrapPost);
+        model.addAttribute("user", userData.get());
         model.addAttribute("tab", "saved");
 
         return "mypage";
     }
+
+
     @PostMapping("/edit-profile")
     public String updateProfile(@RequestParam("profile") String profile,
                                 Authentication auth,
@@ -113,7 +137,6 @@ public class MyPageController {
             userRepository.save(u);
             user.userProfileMessage = profile;
         }
-
         return "redirect:/mypage/edit-profile";
     }
 
