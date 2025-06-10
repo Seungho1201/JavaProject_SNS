@@ -153,7 +153,7 @@
 
                 <!-- 오른쪽 북마크 -->
                 <div>
-                    <button class="iconButtonRight">
+                    <button class="iconButtonRight"  th:onclick="' postScrap(' + ${post.no} + ');'">
                         <i class="far fa-bookmark"></i>
                     </button>
                 </div>
@@ -259,6 +259,30 @@
 <script>
 
     // Scrap로직 ==================================================
+    function postScrap(postId){
+
+        fetch(`/scrap/${postId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({})
+        })
+            // 응답 데이터
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("추천 요청 실패 or 추천 취소");
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log("추천 완료!");
+})
+            .catch(error => {
+                console.error("에러 발생:", error.message);
+            });
+
+    }
 
     // Scrap로직 ==================================================
 
