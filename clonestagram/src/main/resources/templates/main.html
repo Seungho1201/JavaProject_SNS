@@ -102,23 +102,17 @@
 
                     <p th:text="${post.user.userId}" style="font-weight: bold; font-size: 15px; margin-left: 10px">작성 유저 ID</p>
 
-
-                    <p th:if="${post.user.userId == loginUserId}">
-                        <a th:href="@{'/edit/' + ${post.no}}">[수정]</a>
-                    </p>
-
-                    <p th:if="${post.user.userId == loginUserId}">
-                        <a th:href="@{'/delete/' + ${post.no}}">[삭제]</a>
-                    </p>
-
                     <!-- 게시글의 기본키를 가져오기 위한 속성 보이지는 않게-->
                     <p th:text="${post.no}" id="postId" style="display: none"> [기본키] </p>
                 </div>
 
                 <!-- 우측 점 세 개 아이콘 -->
-                <div style="cursor: pointer;" th:onclick="'openPostModal(); test(' + ${post.no} + ');'">
-                    <i class="fas fa-ellipsis-h"></i>
+                <div style="cursor: pointer;" th:inline="javascript">
+                    <i class="fas fa-ellipsis-h"
+                       th:attr="onclick=|openPostModal(${post.no}, '${post.user.userId}')|">
+                    </i>
                 </div>
+
             </div>
 
             <!-- 게시글 이미지 영역 -->
@@ -185,7 +179,7 @@
 
                     <div>
                         <h3 th:text="${user.userName}">유저 이름</h3>
-                        <p th:text="${user.userId}">유저아이디</p>
+                        <p th:text="${user.userId}" id="nowLogUser">유저아이디</p>
                     </div>
                     <a href="/logout">
                         <button class="logout-button">전환</button>
@@ -368,15 +362,47 @@
 
     // ===========================================================================
 
-    function test(postId){
-        console.log(postId);
+    // 포스트 점 3개 모달창 ===========================================================================
+    function openPostModal(postId, postUserId) {
+
+        // 모달창 활성화
+        document.getElementById("postModal").classList.add("active");
+
+        // 포스트 모달창에 게시글 ID 지정
         document.getElementById("postModalId").textContent = postId;
 
-    }
+        const nowLogUser = document.getElementById("nowLogUser").textContent.trim();
 
-    function openPostModal() {
-        document.getElementById("postModal").classList.add("active");
-        //document.body.style.overflow = 'hidden'; // 스크롤 막기
+        const actionContainer = document.getElementById("postModalActions");
+
+        // 기존 수정/삭제 영역 초기화
+        actionContainer.innerHTML = '';
+
+        // 본인이 쓴 글일시 수정과 삭제 기능을 넣음
+        if(nowLogUser == postUserId){
+
+            const actionHTML = `
+            <!-- 삭제 -->
+            <div style="text-align: center">
+               <a href="/delete/${postId}" style="font-weight: bold; color: blue; cursor:pointer; text-decoration: none;">
+                    <p style="font-weight: bold; color: blue; cursor:pointer;">삭제</p>
+              </a>
+            </div>
+            <hr>
+
+            <!-- 수정 -->
+            <div style="text-align: center">
+               <a href="/edit/${postId}" style="font-weight: bold; color: blue; cursor:pointer; text-decoration: none;">
+                    <p style="font-weight: bold; color: blue; cursor:pointer;">수정</p>
+              </a>
+            </div>
+            <hr>`;
+
+            actionContainer.innerHTML = actionHTML;
+        }
+
+
+
     }
 
     function closePostModal() {
@@ -477,6 +503,7 @@
                                 <p style="margin: 0;">${comment.commentContent}</p>
                             </div>
                         </div> `;
+
                     commentContainer.appendChild(commentEl);
                 });
             })

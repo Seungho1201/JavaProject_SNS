@@ -22,10 +22,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserScrapController {
 
-    private final UserScrapRepository userScrapRepository;
-    private final UserRepository userRepository;
-    private final PostRepository postRepository;
     private final UserScrapService userScrapService;
+
 
     // 유저 게시글 스크랩 저장 및 삭제
     @PostMapping("/scrap/{postId}")

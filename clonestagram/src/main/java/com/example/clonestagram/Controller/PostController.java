@@ -1,12 +1,11 @@
 package com.example.clonestagram.Controller;
 
 import com.example.clonestagram.Dto.Response.PostResponseDto;
-import com.example.clonestagram.Entity.Post;
-import com.example.clonestagram.Entity.User;
-import com.example.clonestagram.Repository.PostRepository;
-import com.example.clonestagram.Repository.UserRepository;
+import com.example.clonestagram.Entity.*;
+import com.example.clonestagram.Repository.*;
 import com.example.clonestagram.Security.MyUserDetailsService;
 import com.example.clonestagram.Service.FileService;
+import com.example.clonestagram.Service.UserScrapService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -29,7 +29,13 @@ public class PostController {
 
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+
+    private final UserScrapService userScrapService;
+    private final CommentRepository commentRepository;
+    private final UserLikesRepository userLikesRepository;
+
     private final FileService fileService;
+    private final UserScrapRepository userScrapRepository;
 
 
     //글 작성 화면 Mapping
@@ -109,6 +115,7 @@ public class PostController {
         }
 
         Optional<Post> postOpt = postRepository.findById(postId);
+
         if (postOpt.isPresent()) {
             Post post = postOpt.get();
 
@@ -138,7 +145,25 @@ public class PostController {
         }
 
         MyUserDetailsService.CustomUser user = (MyUserDetailsService.CustomUser) auth.getPrincipal();
+
+        Optional<User> postUser = userRepository.findByUserId(user.userId);
         Optional<Post> postOpt = postRepository.findById(postId);
+
+        Optional<UserLikes> likesOpt = userLikesRepository.findByPostAndUser(postOpt.get(), postUser.get());
+        if (likesOpt.isPresent()) {
+            userLikesRepository.delete(likesOpt.get());
+        }
+
+        Optional<UserScrap> scrapOpt = userScrapRepository.findByUserAndPost(postUser.get(), postOpt.get());
+        if (scrapOpt.isPresent()) {
+            userScrapRepository.delete(scrapOpt.get());
+        }
+
+        List<Comment> comments = commentRepository.findAllByPostAndUser(postOpt.get(), postUser.get());
+        if (!comments.isEmpty()) {
+            commentRepository.deleteAll(comments);
+        }
+
 
         if (postOpt.isPresent()) {
             Post post = postOpt.get();
