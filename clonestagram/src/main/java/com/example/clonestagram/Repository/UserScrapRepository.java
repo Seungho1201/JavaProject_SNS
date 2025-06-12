@@ -14,5 +14,7 @@ public interface UserScrapRepository extends JpaRepository<UserScrap, Long> {
 
     List<UserScrap> findByUser(User user);
 
+    List<UserScrap> findByPost(Post post);
+
     User post(Post post);
 }

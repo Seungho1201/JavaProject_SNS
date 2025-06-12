@@ -16,7 +16,36 @@
 <body class="bg-gray-50">
 
 <div class="story">
-    스토리 만들거임
+    <!-- 스토리처럼 보이게 만들기 -->
+    <div class="storyDesign">
+        <img src="/img/default-profile.png" class="storyImg">
+        <p style="font-size: 12px; margin-top: 1px; color: #6b7280;">sookil</p>
+    </div>
+
+    <div class="storyDesign">
+        <img src="/img/seungho_profile.jpeg" class="storyImg">
+        <p  style="font-size: 12px; margin-top: 1px; color: #6b7280;">Seungho1201</p>
+    </div>
+
+    <div class="storyDesign">
+        <img src="/img/yongbin_profile.webp" class="storyImg">
+        <p  style="font-size: 12px; margin-top: 1px; color: #6b7280;">binyong2e</p>
+    </div>
+
+    <div class="storyDesign">
+        <img src="/img/default-profile.png" class="storyImg">
+        <p  style="font-size: 12px; margin-top: 1px; color: #6b7280;">jiSup</p>
+    </div>
+
+    <div class="storyDesign">
+        <img src="/img/yuhan_profile.png" class="storyImg">
+        <p  style="font-size: 12px; margin-top: 1px; color: #6b7280;">yuhan_univ</p>
+    </div>
+
+    <div class="storyDesign">
+        <img src="/img/com_profile.jpg" class="storyImg">
+        <p  style="font-size: 12px; margin-top: 1px; color: #6b7280;">Yuhan ComputerSc...</p>
+    </div>
 </div>
 
 <main class="main">
@@ -90,8 +119,9 @@
 
     <!-- 게시글(피드) 영역 -->
     <section class="feed">
+
         <!-- 여기 게시글들 th:each 쓰면 됨-->
-        <div  th:each="post : ${posts}" class="postStyle" th:attr="id='post-' + ${post.no}">
+        <div th:each="post : ${posts}" class="postStyle" th:attr="id='post-' + ${post.no}">
 
             <!-- 상단 헤더 -->
             <div class="postHeader">
@@ -173,28 +203,42 @@
         <div class="right-sidebar-wrapper">
             <div class="right-sidebar">
 
-                <div class="sidebar-user-info">
-                    <img th:src="@{${user.userProfile != null ? user.userProfile : '/img/default-profile.png'}}"
-                         alt="Profile" />
+                <div class="sidebar-user-info" style="justify-content: space-between;">
+                    <div style="display: flex">
 
-                    <div>
-                        <h3 th:text="${user.userName}">유저 이름</h3>
-                        <p th:text="${user.userId}" id="nowLogUser">유저아이디</p>
+
+                        <img th:src="@{${user.userProfile != null ? user.userProfile : '/img/default-profile.png'}}" alt="Profile" />
+
+                        <div style="margin-left: 10px">
+                            <h3 th:text="${user.userName}">유저 이름</h3>
+                            <p th:text="${user.userId}" id="nowLogUser">유저아이디</p>
+                        </div>
                     </div>
+
                     <a href="/logout">
                         <button class="logout-button">전환</button>
                     </a>
                 </div>
 
-                <div class="suggestions">
+                <div class="suggestions" >
                     <div class="suggestions-header">
                         <h3>회원님을 위한 추천</h3>
                     </div>
 
-                    <div class="suggestion-item">
-                        <img src="/img/default-profile.png" alt="Suggestion" />
+                    <div class="suggestion-item" >
+                        <img src="/img/seungho_profile.jpeg" alt="Suggestion" />
                         <div class="flex-1">
-                            <h4>추천유저 1</h4>
+                            <h4>SeungHo</h4>
+                            <p>binyong2e님외 6명이 팔로우 합니다</p>
+                        </div>
+                        <button class="follow-button">팔로우</button>
+                    </div>
+
+                    <div class="suggestion-item">
+                        <img src="/img/yongbin_profile.webp" alt="Suggestion" />
+                        <div class="flex-1">
+                            <h4>용빈</h4>
+                            <p>회원님을 위한 추천</p>
                         </div>
                         <button class="follow-button">팔로우</button>
                     </div>
@@ -202,34 +246,30 @@
                     <div class="suggestion-item">
                         <img src="/img/default-profile.png" alt="Suggestion" />
                         <div class="flex-1">
-                            <h4>추천유저 2</h4>
+                            <h4>김수길</h4>
+                            <p>binyong2e님이 팔로우 합니다</p>
                         </div>
                         <button class="follow-button">팔로우</button>
                     </div>
 
                     <div class="suggestion-item">
-                        <img src="/img/default-profile.png" alt="Suggestion" />
+                        <img src="/img/yuhan_profile.png" alt="Suggestion" />
                         <div class="flex-1">
-                            <h4>추천유저 3</h4>
+                            <h4>Yuhan Univ</h4>
+                            <p>sookil님 외 5명이 팔로우 합니다</p>
                         </div>
                         <button class="follow-button">팔로우</button>
                     </div>
 
                     <div class="suggestion-item">
-                        <img src="/img/default-profile.png" alt="Suggestion" />
+                        <img src="/img/com_profile.jpg" alt="Suggestion" />
                         <div class="flex-1">
-                            <h4>추천유저 4</h4>
+                            <h4>Yuhan ComputerScience</h4>
+                            <p>seungho1201님이 팔로우 합니다</p>
                         </div>
                         <button class="follow-button">팔로우</button>
                     </div>
 
-                    <div class="suggestion-item">
-                        <img src="/img/default-profile.png" alt="Suggestion" />
-                        <div class="flex-1">
-                            <h4>추천유저 5</h4>
-                        </div>
-                        <button class="follow-button">팔로우</button>
-                    </div>
                 </div>
 
                 <footer class="sidebar-footer">

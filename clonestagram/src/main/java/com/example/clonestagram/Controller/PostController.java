@@ -149,20 +149,23 @@ public class PostController {
         Optional<User> postUser = userRepository.findByUserId(user.userId);
         Optional<Post> postOpt = postRepository.findById(postId);
 
-        Optional<UserLikes> likesOpt = userLikesRepository.findByPostAndUser(postOpt.get(), postUser.get());
-        if (likesOpt.isPresent()) {
-            userLikesRepository.delete(likesOpt.get());
+        List<UserLikes> likesOpt = userLikesRepository.findByPost(postOpt.get());
+        if (!likesOpt.isEmpty()) {
+            userLikesRepository.deleteAll(likesOpt);
         }
 
-        Optional<UserScrap> scrapOpt = userScrapRepository.findByUserAndPost(postUser.get(), postOpt.get());
-        if (scrapOpt.isPresent()) {
-            userScrapRepository.delete(scrapOpt.get());
+        List<UserScrap> scrapOpt = userScrapRepository.findByPost(postOpt.get());
+        if (!scrapOpt.isEmpty()) {
+            userScrapRepository.deleteAll(scrapOpt);
         }
 
-        List<Comment> comments = commentRepository.findAllByPostAndUser(postOpt.get(), postUser.get());
+
+        List<Comment> comments = commentRepository.findByPost(postOpt.get());
         if (!comments.isEmpty()) {
             commentRepository.deleteAll(comments);
         }
+
+
 
 
         if (postOpt.isPresent()) {
