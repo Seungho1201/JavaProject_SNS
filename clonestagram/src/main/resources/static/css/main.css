@@ -2,22 +2,36 @@ html, body {
     height: 100%;
 }
 
-.story{
-
+.story {
     width: 700px;
-    height: 100px;
-    border: 1px solid;
-
+    height: 130px;
     margin-left: 410px;
+    display: flex;
 }
 
+.storyDesign {
+    width: 81px;
+    height: 81px;
+    text-align: center;
+    margin-top: 10px;
+    margin-left: 25px;
+    border: 3px solid lightgray;
+    border-radius: 50%;
+}
+
+.storyImg {
+    width: 73px;
+    height: 73px;
+    margin: 4px;
+    border-radius: 50%;
+}
 
 /* Sidebar */
 .sidebar {
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh;
+    height: 100%;
     width: 232px;
     border-right: 1px solid #e5e7eb;
     padding-left: 12px;
@@ -34,7 +48,6 @@ html, body {
 .nav {
     display: flex;
     flex-direction: column;
-
 }
 
 .nav-item {
@@ -95,80 +108,20 @@ html, body {
 }
 
 /* Right Sidebar */
-.right-sidebar {
-    width: 300px;
-    margin-left: 3rem;
-    display: none;
-}
-
-@media (min-width: 1024px) {
-    .right-sidebar {
-        display: block;
-    }
-}
-
-
-.nav-profile-img {
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 9999px;
-}
-
-.postStyle{
-    margin-left: 54px;
-    width : 470px;
-
-
-}
-
-.postHeader{
-    display: flex;
-    align-items: center;
-
-
-    justify-content: space-between;
-}
-
-.postProfileStyle{
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-
-
-}
-
-.postImg{
-    width: 100%;
-    height: 100%;
-    border-radius: 5px;
-    border: 1px solid lightgray;
-}
-
-.postActionButtonStyle{
-    display: flex;
-    justify-content: space-between;
-    margin-top: 5px;
-}
-
-
-/* Right Sidebar Wrapper */
 .right-sidebar-wrapper {
-    display: none;
+    display: block;
     width: 320px;
     margin-left: 3rem;
-}
-
-@media (min-width: 1024px) {
-    .right-sidebar-wrapper {
-        display: block;
-    }
+    margin-top: 0;
 }
 
 .right-sidebar {
-    margin-top: -40px;
-    margin-left: 535px;
-    position: fixed;
+    position: static; /* 👈 스크롤 따라오지 않게 고정 제거 */
+    top: 0px;
     width: 320px;
+    margin-top: -50px;
+    margin-left: -100px;
+    height: fit-content;
 }
 
 .sidebar-user-info {
@@ -180,7 +133,7 @@ html, body {
 
 .sidebar-user-info button {
     font-size: 12px;
-    margin-left: 135px;
+    margin-left: auto;
 }
 
 .sidebar-user-info img {
@@ -199,6 +152,7 @@ html, body {
     font-size: 0.875rem;
     color: #6b7280;
     margin: 0;
+
 }
 
 .logout-button {
@@ -228,7 +182,13 @@ html, body {
 .suggestion-item {
     display: flex;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.suggestion-item p {
+    color: gray;
+    font-size: 13px;
+    margin-top: 0;
 }
 
 .suggestion-item img {
@@ -242,6 +202,7 @@ html, body {
     font-size: 0.875rem;
     font-weight: 600;
     margin: 0;
+    margin-top: 5px;
 }
 
 .follow-button {
@@ -272,28 +233,55 @@ html, body {
     text-decoration: underline;
 }
 
-
 .iconButton {
-    background: none;         /* ✅ 배경 제거 */
-    border: none;             /* ✅ 테두리 제거 */
-    font-size: 24px;          /* ✅ 아이콘 크기 */
-    color: #4b5563;           /* ✅ 기본 색상 (gray-700) */
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #4b5563;
     cursor: pointer;
-
     transition: color 0.2s ease;
 }
 
 .iconButton:hover {
-    color: #1f2937;           /* ✅ hover 색상 (gray-900) */
+    color: #1f2937;
 }
 
-.iconButtonRight{
-    background: none;         /* ✅ 배경 제거 */
-    border: none;             /* ✅ 테두리 제거 */
-    font-size: 24px;          /* ✅ 아이콘 크기 */
-    color: #4b5563;           /* ✅ 기본 색상 (gray-700) */
+.iconButtonRight {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #4b5563;
     cursor: pointer;
     margin-right: -5px;
     transition: color 0.2s ease;
- }
+}
 
+.postStyle {
+    margin-left: 54px;
+    width: 470px;
+}
+
+.postHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.postProfileStyle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.postImg {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+}
+
+.postActionButtonStyle {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+}

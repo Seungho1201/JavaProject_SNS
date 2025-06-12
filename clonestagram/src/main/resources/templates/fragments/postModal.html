@@ -3,7 +3,38 @@
 <div th:fragment="modalFragment" id="postModal" class="postModal-overlay">
 
   <div class="postModal-content">
-      <h1>ddd</h1>
-      <p id="postModalId"></p>
+
+      <p id="postModalId" style="display: none"></p>
+
+      <div style="text-align: center">
+          <p style="font-weight: bold; color: red">신고</p>
+      </div>
+
+      <hr>
+
+      <div style="text-align: center">
+          <p style="font-weight: bold; color: red">팔로우 취소</p>
+      </div>
+
+      <hr>
+
+      <!-- 수정/삭제 버튼이 들어갈 영역 -->
+      <div id="postModalActions"></div>
+
+      <div style="text-align: center">
+          <p style="font-weight: bold">게시글 저장</p>
+      </div>
+
+      <hr>
+
+      <div style="text-align: center">
+          <p style="font-weight: bold">링크 복사</p>
+      </div>
+
+      <hr>
+
+      <div style="text-align: center">
+          <p style="font-weight: bold">퍼가기</p>
+      </div>
     </div>
 </div>

@@ -16,7 +16,36 @@
 <body class="bg-gray-50">
 
 <div class="story">
-    스토리 만들거임
+    <!-- 스토리처럼 보이게 만들기 -->
+    <div class="storyDesign">
+        <img src="/img/default-profile.png" class="storyImg">
+        <p style="font-size: 12px; margin-top: 1px; color: #6b7280;">sookil</p>
+    </div>
+
+    <div class="storyDesign">
+        <img src="/img/seungho_profile.jpeg" class="storyImg">
+        <p  style="font-size: 12px; margin-top: 1px; color: #6b7280;">Seungho1201</p>
+    </div>
+
+    <div class="storyDesign">
+        <img src="/img/yongbin_profile.webp" class="storyImg">
+        <p  style="font-size: 12px; margin-top: 1px; color: #6b7280;">binyong2e</p>
+    </div>
+
+    <div class="storyDesign">
+        <img src="/img/default-profile.png" class="storyImg">
+        <p  style="font-size: 12px; margin-top: 1px; color: #6b7280;">jiSup</p>
+    </div>
+
+    <div class="storyDesign">
+        <img src="/img/yuhan_profile.png" class="storyImg">
+        <p  style="font-size: 12px; margin-top: 1px; color: #6b7280;">yuhan_univ</p>
+    </div>
+
+    <div class="storyDesign">
+        <img src="/img/com_profile.jpg" class="storyImg">
+        <p  style="font-size: 12px; margin-top: 1px; color: #6b7280;">Yuhan ComputerSc...</p>
+    </div>
 </div>
 
 <main class="main">
@@ -30,7 +59,7 @@
 
         <nav class="nav">
             <!-- 홈 아이콘 -->
-            <a href="/test" class="nav-item">
+            <a href="/main" class="nav-item">
                 <i class="fas fa-home"></i><span style="font-size: 17px">홈</span>
             </a>
 
@@ -71,7 +100,7 @@
             </a>
 
             <!-- 마이페이지 아이콘 -->
-            <a href="/mypage" class="nav-item">
+            <a href="/mypage/posts" class="nav-item">
                 <!-- 유저 아이콘 null(설정안함)일시 기본 아이콘으로 -->
                 <img th:src="@{${user.userProfile != null ? user.userProfile : '/img/default-profile.png'}}"
                      class="profile-img" alt="Story" style="margin-left: -5px"/>
@@ -90,8 +119,9 @@
 
     <!-- 게시글(피드) 영역 -->
     <section class="feed">
+
         <!-- 여기 게시글들 th:each 쓰면 됨-->
-        <div  th:each="post : ${posts}" class="postStyle" th:attr="id='post-' + ${post.no}">
+        <div th:each="post : ${posts}" class="postStyle" th:attr="id='post-' + ${post.no}">
 
             <!-- 상단 헤더 -->
             <div class="postHeader">
@@ -102,23 +132,17 @@
 
                     <p th:text="${post.user.userId}" style="font-weight: bold; font-size: 15px; margin-left: 10px">작성 유저 ID</p>
 
-
-                    <p th:if="${post.user.userId == loginUserId}">
-                        <a th:href="@{'/edit/' + ${post.no}}">[수정]</a>
-                    </p>
-
-                    <p th:if="${post.user.userId == loginUserId}">
-                        <a th:href="@{'/delete/' + ${post.no}}">[삭제]</a>
-                    </p>
-
                     <!-- 게시글의 기본키를 가져오기 위한 속성 보이지는 않게-->
                     <p th:text="${post.no}" id="postId" style="display: none"> [기본키] </p>
                 </div>
 
                 <!-- 우측 점 세 개 아이콘 -->
-                <div style="cursor: pointer;" th:onclick="'openPostModal(); test(' + ${post.no} + ');'">
-                    <i class="fas fa-ellipsis-h"></i>
+                <div style="cursor: pointer;" th:inline="javascript">
+                    <i class="fas fa-ellipsis-h"
+                       th:attr="onclick=|openPostModal(${post.no}, '${post.user.userId}')|">
+                    </i>
                 </div>
+
             </div>
 
             <!-- 게시글 이미지 영역 -->
@@ -179,28 +203,42 @@
         <div class="right-sidebar-wrapper">
             <div class="right-sidebar">
 
-                <div class="sidebar-user-info">
-                    <img th:src="@{${user.userProfile != null ? user.userProfile : '/img/default-profile.png'}}"
-                         alt="Profile" />
+                <div class="sidebar-user-info" style="justify-content: space-between;">
+                    <div style="display: flex">
 
-                    <div>
-                        <h3 th:text="${user.userName}">유저 이름</h3>
-                        <p th:text="${user.userId}">유저아이디</p>
+
+                        <img th:src="@{${user.userProfile != null ? user.userProfile : '/img/default-profile.png'}}" alt="Profile" />
+
+                        <div style="margin-left: 10px">
+                            <h3 th:text="${user.userName}">유저 이름</h3>
+                            <p th:text="${user.userId}" id="nowLogUser">유저아이디</p>
+                        </div>
                     </div>
+
                     <a href="/logout">
                         <button class="logout-button">전환</button>
                     </a>
                 </div>
 
-                <div class="suggestions">
+                <div class="suggestions" >
                     <div class="suggestions-header">
                         <h3>회원님을 위한 추천</h3>
                     </div>
 
-                    <div class="suggestion-item">
-                        <img src="/img/default-profile.png" alt="Suggestion" />
+                    <div class="suggestion-item" >
+                        <img src="/img/seungho_profile.jpeg" alt="Suggestion" />
                         <div class="flex-1">
-                            <h4>추천유저 1</h4>
+                            <h4>SeungHo</h4>
+                            <p>binyong2e님외 6명이 팔로우 합니다</p>
+                        </div>
+                        <button class="follow-button">팔로우</button>
+                    </div>
+
+                    <div class="suggestion-item">
+                        <img src="/img/yongbin_profile.webp" alt="Suggestion" />
+                        <div class="flex-1">
+                            <h4>용빈</h4>
+                            <p>회원님을 위한 추천</p>
                         </div>
                         <button class="follow-button">팔로우</button>
                     </div>
@@ -208,34 +246,30 @@
                     <div class="suggestion-item">
                         <img src="/img/default-profile.png" alt="Suggestion" />
                         <div class="flex-1">
-                            <h4>추천유저 2</h4>
+                            <h4>김수길</h4>
+                            <p>binyong2e님이 팔로우 합니다</p>
                         </div>
                         <button class="follow-button">팔로우</button>
                     </div>
 
                     <div class="suggestion-item">
-                        <img src="/img/default-profile.png" alt="Suggestion" />
+                        <img src="/img/yuhan_profile.png" alt="Suggestion" />
                         <div class="flex-1">
-                            <h4>추천유저 3</h4>
+                            <h4>Yuhan Univ</h4>
+                            <p>sookil님 외 5명이 팔로우 합니다</p>
                         </div>
                         <button class="follow-button">팔로우</button>
                     </div>
 
                     <div class="suggestion-item">
-                        <img src="/img/default-profile.png" alt="Suggestion" />
+                        <img src="/img/com_profile.jpg" alt="Suggestion" />
                         <div class="flex-1">
-                            <h4>추천유저 4</h4>
+                            <h4>Yuhan ComputerScience</h4>
+                            <p>seungho1201님이 팔로우 합니다</p>
                         </div>
                         <button class="follow-button">팔로우</button>
                     </div>
 
-                    <div class="suggestion-item">
-                        <img src="/img/default-profile.png" alt="Suggestion" />
-                        <div class="flex-1">
-                            <h4>추천유저 5</h4>
-                        </div>
-                        <button class="follow-button">팔로우</button>
-                    </div>
                 </div>
 
                 <footer class="sidebar-footer">
@@ -368,15 +402,47 @@
 
     // ===========================================================================
 
-    function test(postId){
-        console.log(postId);
+    // 포스트 점 3개 모달창 ===========================================================================
+    function openPostModal(postId, postUserId) {
+
+        // 모달창 활성화
+        document.getElementById("postModal").classList.add("active");
+
+        // 포스트 모달창에 게시글 ID 지정
         document.getElementById("postModalId").textContent = postId;
 
-    }
+        const nowLogUser = document.getElementById("nowLogUser").textContent.trim();
 
-    function openPostModal() {
-        document.getElementById("postModal").classList.add("active");
-        //document.body.style.overflow = 'hidden'; // 스크롤 막기
+        const actionContainer = document.getElementById("postModalActions");
+
+        // 기존 수정/삭제 영역 초기화
+        actionContainer.innerHTML = '';
+
+        // 본인이 쓴 글일시 수정과 삭제 기능을 넣음
+        if(nowLogUser == postUserId){
+
+            const actionHTML = `
+            <!-- 삭제 -->
+            <div style="text-align: center">
+               <a href="/delete/${postId}" style="font-weight: bold; color: blue; cursor:pointer; text-decoration: none;">
+                    <p style="font-weight: bold; color: blue; cursor:pointer;">삭제</p>
+              </a>
+            </div>
+            <hr>
+
+            <!-- 수정 -->
+            <div style="text-align: center">
+               <a href="/edit/${postId}" style="font-weight: bold; color: blue; cursor:pointer; text-decoration: none;">
+                    <p style="font-weight: bold; color: blue; cursor:pointer;">수정</p>
+              </a>
+            </div>
+            <hr>`;
+
+            actionContainer.innerHTML = actionHTML;
+        }
+
+
+
     }
 
     function closePostModal() {
@@ -477,6 +543,7 @@
                                 <p style="margin: 0;">${comment.commentContent}</p>
                             </div>
                         </div> `;
+
                     commentContainer.appendChild(commentEl);
                 });
             })
