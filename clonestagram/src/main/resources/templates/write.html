@@ -6,6 +6,7 @@
     <title>Instagram Clone</title>
     <link rel="stylesheet" href="/css/write.css"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+
 </head>
 <body class="bg-light-gray">
 
@@ -24,13 +25,15 @@
 <main class="main">
     <div class="post-box">
         <div class="post-grid">
-            <div class="upload-section">
+            <div class="upload-section" id="drop">
                 <div class="upload-inner">
-                    <div class="upload-icon">
+                    <div class="upload-icon" id="uploadIcon">
                         <i class="fas fa-image"></i>
                     </div>
-                    <h3 class="upload-title">Drag photos and videos here</h3>
-                    <button class="upload-button">Select from computer</button>
+                    <div id="preview"></div>
+                    <h3 class="upload-title">사진이나 비디오를 끌어오세요!</h3>
+                    <button class="upload-button" onclick="document.getElementById('fileInput').click()">컴퓨터에서 선택</button>
+
                 </div>
             </div>
 
@@ -42,11 +45,12 @@
                     </div>
 
                     <!-- 입력 로직 -->
-                    <form method="post" action="write" enctype="multipart/form-data">
-                        <input type="file" name="file" accept="image/*">
-                        <input type="text" name="content"  placeholder="Write a caption..." style="height: 200px; width: 300px">
+                    <form method="post" action="write"  enctype="multipart/form-data">
+                        <input type="file" name="file" id="fileInput" accept="image/*" style ="display: none">
+                        <input type="text" name="content"  placeholder="글을 입력하세요" style="height: 200px; width: 300px">
 
                         <input type="submit" class="submit-button">
+
                     </form>
 
                 </div>
@@ -56,6 +60,63 @@
         </div>
     </div>
 </main>
+<script>
+    const drop = document.getElementById('drop');
+    const fileInput = document.getElementById('fileInput');
+    const preview = document.getElementById('preview');
+    const uploadIcon = document.getElementById('uploadIcon');
+
+    // 기본 브라우저 기능 막기
+    //addEventListener: 특정 이벤트 발생 시 실행할 함수를 등록할 수 있음
+    window.addEventListener("dragover", (e) => e.preventDefault(), false);
+
+    // 드래그 오버 효과
+    drop.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        drop.style.border = '2px dashed #000';
+        drop.style.backgroundColor = '#f0f0f0';
+    });
+
+    // 드래그 떠났을 때 원복
+    drop.addEventListener('dragleave', () => {
+        drop.style.border = '';
+        drop.style.backgroundColor = '';
+    });
+
+    // 공통 파일 처리 함수
+    function handleFile(file) {
+        if (!file) return;
+
+        // 미리보기
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            uploadIcon.style.display = 'none'; // 아이콘 숨기기
+            preview.innerHTML = `<img src="${event.target.result}" alt="preview" style="max-width:100%; max-height:300px;" />`;
+        };
+        reader.readAsDataURL(file); // Base64(이진 데이터를 문자로 인코딩한 방식)형태의 URL로 인코딩해주는 내장 메서드
+
+        // input에 파일 세팅
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        fileInput.files = dataTransfer.files;
+    }
+
+    // 드래그 앤 드롭 처리
+    drop.addEventListener('drop', (e) => {
+        e.preventDefault();
+        drop.style.border = '';
+        drop.style.backgroundColor = '';
+        const file = e.dataTransfer.files[0];
+        handleFile(file);
+    });
+
+    // 파일 선택 시 처리
+    fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        handleFile(file);
+    });
+</script>
+
 
 </body>
 </html>

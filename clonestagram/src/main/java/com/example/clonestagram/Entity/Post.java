@@ -18,7 +18,7 @@ public class Post {
     private User user;
 
     private String content;
-    private int postRecommend = 0;
+    private Integer postRecommend = 0;
     private String postImg;
 
     @CreationTimestamp
