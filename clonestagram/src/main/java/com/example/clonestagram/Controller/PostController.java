@@ -108,8 +108,9 @@ public class PostController {
     @PostMapping("/edit/{postId}")
     public String editPost(@PathVariable Long postId,
                            @RequestParam String content,
+                           @RequestParam(value = "file", required = false) MultipartFile file,
                            Authentication auth,
-                           Model model) {
+                           Model model) throws IOException {
         if (auth == null) {
             return "login";
         }
@@ -118,23 +119,29 @@ public class PostController {
 
         if (postOpt.isPresent()) {
             Post post = postOpt.get();
-
             MyUserDetailsService.CustomUser user = (MyUserDetailsService.CustomUser) auth.getPrincipal();
             model.addAttribute("loginUserId", user.userId);
 
-
             if (!post.getUser().getUserId().equals(user.userId)) {
-                System.out.println("누구새요?");
                 return "redirect:/main";
             }
 
             post.setContent(content);
+
+            // 이미지 수정이 있는 경우
+            if (file != null && !file.isEmpty()) {
+                String imagePath = fileService.uploadToStaticImg(file);
+                if (imagePath != null) {
+                    post.setPostImg(imagePath);
+                }
+            }
+
             postRepository.save(post);
         }
 
-
         return "redirect:/main";
     }
+
 
 
     @GetMapping("/delete/{postId}")
