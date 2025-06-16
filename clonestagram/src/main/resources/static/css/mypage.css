@@ -195,13 +195,14 @@ body {
 .post {
     background-color: #fff;
     border: 1px solid #ddd;
+    height: 400px;
     padding: 8px;
     text-align: center;
 }
 
 .post img {
     width: 100%;
-    height: auto;
+    height: 300px; /* 고정 이미지 높이 */
     object-fit: cover;
 }
 
