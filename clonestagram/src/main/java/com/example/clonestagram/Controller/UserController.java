@@ -50,7 +50,7 @@ public class UserController {
 
 
         // 회원가입 완료 후 로그인 페이지로
-        return "/main";
+        return "main";
 
     }
 
