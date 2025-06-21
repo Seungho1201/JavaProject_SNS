@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <title>Clonestagram</title>
+            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+            <link rel="stylesheet" href="/css/main.css">
+            <link rel="stylesheet" href="/css/modal.css" />
+            <link rel="stylesheet" href="/css/postModal.css" />
+        </head>
+
+        <body class="bg-gray-50">
+
+        <div class="story">
+            <!-- 스토리처럼 보이게 만들기 -->
+            <div class="storyDesign">
+                <img src="/img/default-profile.png" class="storyImg">
+                <p style="font-size: 12px; margin-top: 1px; color: #6b7280;">sookil</p>
+            </div>
+
+            <div class="storyDesign">
+                <img src="/img/seungho_profile.jpeg" class="storyImg">
+                <p style="font-size: 12px; margin-top: 1px; color: #6b7280;">Seungho1201</p>
+            </div>
+
+            <div class="storyDesign">
+                <img src="/img/yongbin_profile.webp" class="storyImg">
+                <p style="font-size: 12px; margin-top: 1px; color: #6b7280;">binyong2e</p>
+            </div>
+
+            <div class="storyDesign">
+                <img src="/img/default-profile.png" class="storyImg">
+                <p style="font-size: 12px; margin-top: 1px; color: #6b7280;">jiSup</p>
+            </div>
+
+            <div class="storyDesign">
+                <img src="/img/yuhan_profile.png" class="storyImg">
+                <p style="font-size: 12px; margin-top: 1px; color: #6b7280;">yuhan_univ</p>
+            </div>
+
+            <div class="storyDesign">
+                <img src="/img/com_profile.jpg" class="storyImg">
+                <p style="font-size: 12px; margin-top: 1px; color: #6b7280;">Yuhan ComputerSc...</p>
+            </div>
+        </div>
+
+        <main class="main">
+            <!-- 좌측 사이드 메뉴바 -->
+            <aside class="sidebar">
+
+                <!--로고 아이콘-->
+                <div style="margin-top: 41px; margin-left: 12px; margin-bottom: 40px">
+                    <img src="/img/logo.png" alt="예시 이미지" style="width: 102px">
+                </div>
+
+                <nav class="nav">
+                    <!-- 홈 아이콘 -->
+                    <a href="/main" class="nav-item">
+                        <i class="fas fa-home"></i><span style="font-size: 17px">홈</span>
+                    </a>
+
+                    <!-- 검색 아이콘 -->
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-search"></i>
+                        <span style="font-size: 17px">검색</span>
+                    </a>
+
+                    <!-- 탐색 아이콘 -->
+                    <a href="#" class="nav-item">
+                        <i class="far fa-compass"></i>
+                        <span style="font-size: 17px">탐색 탭</span>
+                    </a>
+
+                    <!-- 릴스 아이콘 -->
+                    <a href="#" class="nav-item">
+                        <i class="far fa-play-circle"></i>
+                        <span style="font-size: 17px">릴스</span>
+                    </a>
+
+                    <!-- 메세지 아이콘 -->
+                    <a href="#" class="nav-item">
+                        <i class="far fa-paper-plane"></i>
+                        <span style="font-size: 17px">메세지</span>
+                    </a>
+
+                    <!-- 알림 아이콘 -->
+                    <a href="#" class="nav-item">
+                        <i class="far fa-heart"></i>
+                        <span style="font-size: 17px">알림</span>
+                    </a>
+
+                    <!-- 게시글 작성 아이콘 -->
+                    <a href="/write" class="nav-item">
+                        <i class="far fa-plus-square"></i>
+                        <span style="font-size: 17px">만들기</span>
+                    </a>
+
+                    <!-- 마이페이지 아이콘 -->
+                    <a href="/mypage/posts" class="nav-item">
+                        <!-- 유저 아이콘 null(설정안함)일시 기본 아이콘으로 -->
+                        <img th:src="@{${user != null and user.userProfile != null ? user.userProfile : '/img/default-profile.png'}}"
+                             class="profile-img" alt="Story" style="margin-left: -5px"/>
+                        <span style="font-size: 17px">프로필</span>
+                    </a>
+                </nav>
+
+                <!-- 더보기 -->
+                <div class="more-menu">
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-bars"></i><span>더보기</span>
+                    </a>
+                </div>
+            </aside>
+
+            <!-- 게시글(피드) 영역 -->
+            <section class="feed">
+
+                <!-- 여기 게시글들 th:each 쓰면 됨-->
+                <div th:each="post : ${posts}" class="postStyle" th:attr="id='post-' + ${post.no}">
+
+                    <!-- 상단 헤더 -->
+                    <div class="postHeader">
+                        <div style="display: flex; align-items: center;">
+                            <!-- 유저 아이콘 null(설정안함)일시 기본 아이콘으로 -->
+                            <img th:src="@{${post.user.userProfile != null ? post.user.userProfile : '/img/default-profile.png'}}"
+                                 class="postProfileStyle">
+
+                            <p th:text="${post.user.userId}" style="font-weight: bold; font-size: 15px; margin-left: 10px">작성 유저 ID</p>
+
+                            <!-- 게시글의 기본키를 가져오기 위한 속성 보이지는 않게-->
+                            <p th:text="${post.no}" id="postId" style="display: none"> [기본키] </p>
+                        </div>
+
+                        <!-- 우측 점 세 개 아이콘 -->
+                        <div style="cursor: pointer;" th:inline="javascript">
+                            <i class="fas fa-ellipsis-h" th:attr="onclick=|openPostModal(${post.no}, '${post.user.userId}')|"></i>
+                        </div>
+                    </div>
+
+                    <!-- 게시글 이미지 영역 -->
+                    <div>
+                        <img th:src="@{${post.postImg}}" class="postImg">
+                    </div>
+
+                    <!-- 이미지 아래 아이콘 버튼들 -->
+                    <div class="postActionButtonStyle">
+                        <div style="display: flex; margin-left: -5px">
+
+                            <!-- Likes -->
+                            <!-- 클릭시 좋아요 카운트 -->
+                            <button class="iconButton" th:onclick="' recommendFunc(' + ${post.no} + ');'">
+                                <i class="far fa-heart"></i>
+                            </button>
+
+                            <!-- Comment -->
+                            <!-- 클릭시 모달창(상세페이지(댓글 포함))을 띄운다-->
+                            <button class="iconButton" th:attr="data-post-id=${post.no}" th:onclick="'openModal(); loadPost(' + ${post.no} + ');'">
+                                <i class="far fa-comment"></i>
+                            </button>
+
+                            <!-- DM -->
+                            <button class="iconButton">
+                                <i class="far fa-paper-plane"></i>
+                            </button>
+                        </div>
+
+                        <!-- 오른쪽 북마크 -->
+                        <div>
+                            <button class="iconButtonRight" th:onclick="' postScrap(' + ${post.no} + ');'">
+                                <i class="far fa-bookmark"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 좋아요 수 -->
+                    <div>
+                        <p class="like-count" th:text="'좋아요 ' + ${post.postRecommend} + '개'" style="font-weight: bold; font-size: 15px; margin-top: 7px;">좋아요 999개</p>
+                    </div>
+
+                    <!-- 게시글 본문 내용 -->
+                    <div>
+                        <p th:text="${post.content}">내용</p>
+                    </div>
+
+                    <hr>
+                </div>
+            </section>
+
+            <!-- 우측 사이드바 -->
+            <aside class="right-sidebar">
+
+                <div class="right-sidebar-wrapper">
+                    <div class="right-sidebar">
+
+                        <div class="sidebar-user-info" style="justify-content: space-between;">
+                            <div style="display: flex">
+
+                                <img th:src="@{${user != null and user.userProfile != null ? user.userProfile : '/img/default-profile.png'}}" alt="Profile" />
+
+                                <div style="margin-left: 10px">
+                                    <h3 th:text="${user != null ? user.userName : ''}">유저 이름</h3>
+                                    <p th:text="${user != null ? user.userId : ''}" id="nowLogUser">유저아이디</p>
+                                </div>
+                            </div>
+
+                            <a href="/logout">
+                                <button class="logout-button">전환</button>
+                            </a>
+                        </div>
+
+                        <div class="suggestions">
+                            <div class="suggestions-header">
+                                <h3>회원님을 위한 추천</h3>
+                            </div>
+
+                            <div class="suggestion-item">
+                                <img src="/img/seungho_profile.jpeg" alt="Suggestion" />
+                                <div class="flex-1">
+                                    <h4>SeungHo</h4>
+                                    <p>binyong2e님외 6명이 팔로우 합니다</p>
+                                </div>
+                                <button class="follow-button">팔로우</button>
+                            </div>
+
+                            <div class="suggestion-item">
+                                <img src="/img/yongbin_profile.webp" alt="Suggestion" />
+                                <div class="flex-1">
+                                    <h4>용빈</h4>
+                                    <p>회원님을 위한 추천</p>
+                                </div>
+                                <button class="follow-button">팔로우</button>
+                            </div>
+
+                            <div class="suggestion-item">
+                                <img src="/img/default-profile.png" alt="Suggestion" />
+                                <div class="flex-1">
+                                    <h4>김수길</h4>
+                                    <p>binyong2e님이 팔로우 합니다</p>
+                                </div>
+                                <button class="follow-button">팔로우</button>
+                            </div>
+
+                            <div class="suggestion-item">
+                                <img src="/img/yuhan_profile.png" alt="Suggestion" />
+                                <div class="flex-1">
+                                    <h4>Yuhan Univ</h4>
+                                    <p>sookil님 외 5명이 팔로우 합니다</p>
+                                </div>
+                                <button class="follow-button">팔로우</button>
+                            </div>
+
+                            <div class="suggestion-item">
+                                <img src="/img/com_profile.jpg" alt="Suggestion" />
+                                <div class="flex-1">
+                                    <h4>Yuhan ComputerScience</h4>
+                                    <p>seungho1201님이 팔로우 합니다</p>
+                                </div>
+                                <button class="follow-button">팔로우</button>
+                            </div>
+                        </div>
+
+                        <footer class="sidebar-footer">
+                            <nav>
+                                <p>오승호, 김용빈, 김수길 제작</p>
+                                <p>© 2025 Java Framework Final Project</p>
+                            </nav>
+                        </footer>
+                    </div>
+                </div>
+            </aside>
+        </main>
+        <!-- 모달 삽입 -->
+        <div th:replace="~{fragments/modal :: modalFragment}"></div>
+        <div th:replace="~{fragments/postModal :: modalFragment}"></div>
+    </body>
+</html>
+
+
+<!-- 모달 삽입 -->
+<div th:replace="~{fragments/modal :: modalFragment}"></div>
+
+<div th:replace="~{fragments/postModal :: modalFragment}"></div>
+
+
+
+<script>
+
+    // Scrap로직 ==================================================
+    function postScrap(postId){
+
+        fetch(`/scrap/${postId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({})
+        })
+            // 응답 데이터
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("추천 요청 실패 or 추천 취소");
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log("추천 완료!");
+})
+            .catch(error => {
+                console.error("에러 발생:", error.message);
+            });
+
+    }
+
+    // Scrap로직 ==================================================
+
+    // 추천 userlikes 로직 ==================================================
+
+    // 모달창에서 호출용 추천 함수
+    function modalRecommendFunc(){
+        const postId = document.getElementById("postId").textContent.trim();
+        //console.log(postId);
+
+        recommendFunc(postId);
+    }
+
+
+    // 추천 AJAX
+    function recommendFunc(postId){
+
+        //console.log(postId)
+
+        fetch(`/post/recommend/${postId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({})
+        })
+            // 응답 데이터
+            .then(response => {
+                if (!response.ok) {
+                    // 에러시 취소 로직
+                    // 이미 추천한 경우 or 예외의 경우 에러 발생하기 떄문
+                    cancelRecommend(postId);
+
+                    throw new Error("추천 요청 실패 or 추천 취소");
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log("추천 완료!");
+
+                // 요소 가져와서 증가
+                const postElement = document.querySelector(`#post-${postId}`);
+                const likeCountElement = postElement.querySelector('.like-count');
+                let currentCount = parseInt(likeCountElement.textContent.replace(/[^0-9]/g, ""));
+
+                likeCountElement.textContent = `좋아요 ${currentCount + 1}개`;
+            })
+            .catch(error => {
+                console.error("에러 발생:", error.message);
+            });
+    }
+
+    // 추천 취소 AJAX
+    // 추천 로직에서 에러 발생시 처리한다
+    function cancelRecommend(postId){
+        console.log(postId);
+
+        // AJAX 요청
+        fetch(`/post/cancel/recommend/${postId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({})
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("에러 발생");
+                }
+                return response.text();  // void 리턴이면 필요 없음
+            })
+            .then(data => {
+                console.log("좋아요 취소 완료");
+
+                // 요소 가져와서 추천수 감소
+                const postElement = document.querySelector(`#post-${postId}`);
+                const likeCountElement = postElement.querySelector('.like-count');
+                let currentCount = parseInt(likeCountElement.textContent.replace(/[^0-9]/g, ""));
+
+                likeCountElement.textContent = `좋아요 ${currentCount - 1}개`;
+            })
+    }
+
+    // ===========================================================================
+
+    // 포스트 점 3개 모달창 ===========================================================================
+    function openPostModal(postId, postUserId) {
+
+        // 모달창 활성화
+        document.getElementById("postModal").classList.add("active");
+
+        // 포스트 모달창에 게시글 ID 지정
+        document.getElementById("postModalId").textContent = postId;
+
+        const nowLogUser = document.getElementById("nowLogUser").textContent.trim();
+
+        const actionContainer = document.getElementById("postModalActions");
+
+        // 기존 수정/삭제 영역 초기화
+        actionContainer.innerHTML = '';
+
+        // 본인이 쓴 글일시 수정과 삭제 기능을 넣음
+        if(nowLogUser == postUserId){
+
+            const actionHTML = `
+            <!-- 삭제 -->
+            <div style="text-align: center">
+               <a href="/delete/${postId}" style="font-weight: bold; color: blue; cursor:pointer; text-decoration: none;">
+                    <p style="font-weight: bold; color: blue; cursor:pointer;">삭제</p>
+              </a>
+            </div>
+            <hr>
+
+            <!-- 수정 -->
+            <div style="text-align: center">
+               <a href="/edit/${postId}" style="font-weight: bold; color: blue; cursor:pointer; text-decoration: none;">
+                    <p style="font-weight: bold; color: blue; cursor:pointer;">수정</p>
+              </a>
+            </div>
+            <hr>`;
+
+            actionContainer.innerHTML = actionHTML;
+        }
+
+
+
+    }
+
+    function closePostModal() {
+        document.getElementById("postModal").classList.remove("active");
+        //document.body.style.overflow = ''; // 스크롤 원래대로
+    }
+
+    // 모달 외부 클릭 시 닫기
+    window.addEventListener('click', function (e) {
+        const modal = document.getElementById("postModal");
+
+        if (e.target === modal) {
+            closePostModal();
+        }
+    });
+
+
+
+    function openModal() {
+        const commentButtons = document.querySelector('.comment-button');
+
+        document.getElementById("commentModal").classList.add("active");
+
+        //document.body.style.overflow = 'hidden'; // 스크롤 막기
+    }
+
+    function closeModal() {
+        document.getElementById("commentModal").classList.remove("active");
+
+       // document.body.style.overflow = ''; // 스크롤 원래대로
+    }
+
+    // 모달 외부 클릭 시 닫기
+    window.addEventListener('click', function (e) {
+        const modal = document.getElementById("commentModal");
+
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    // AJAX 데이터 요청
+    async function loadPost(postId) {
+        await fetch(`/detail/${postId}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data); // 확인용
+
+                document.getElementById("modalUserId").textContent = data.user.userId;
+                document.getElementById("modalUserId2").textContent = data.user.userId;
+                document.getElementById("modalContent").textContent = data.content;
+
+                document.getElementById("modelProfileImg").src = data.user.userProfile;
+                document.getElementById("modelProfileImg2").src = data.user.userProfile;
+                document.getElementById("modalImg").src = data.postImg;
+
+                document.getElementById("modalDate").textContent = data.postDate.substring(0, 10);
+                document.getElementById("modalRecommend").textContent = "좋아요 "+ data.postRecommend + "개";
+
+                document.getElementById("postId").textContent = data.no;
+
+            });
+        // 댓글 리스트 가져오기
+        getCommentList();
+    }
+
+    function getCommentList(){
+
+        let postId = document.getElementById("postId").textContent.trim();
+
+        fetch(`/get/commentlist/${postId}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data); // 확인용
+
+                const commentContainer = document.querySelector(".modalComment");
+                commentContainer.innerHTML = ""; // 기존 내용 초기화
+
+                if (data.length === 0) {
+                    commentContainer.innerHTML = "<p style='margin: 10px 0;'>댓글이 아직 없습니다.</p>";
+                    return;
+                }
+
+                // 댓글 리스트 요소 삽입
+                data.forEach(comment => {
+                    const commentEl = document.createElement("div");
+
+                    commentEl.classList.add("commentItem");
+                    commentEl.style.marginBottom = "10px";
+
+                    // 댓글 요소 삽입
+                    commentEl.innerHTML = `
+                        <div style="display: flex; align-items: center; margin-top: 20px">
+                              <img src="${comment.user.userProfile ? comment.user.userProfile : '/img/default-profile.png'}"
+             class="modelProfileImg" style="margin-left: 10px">
+                            <div style="margin-left: 10px">
+                                <p style="margin: 0;"><strong>${comment.user.userId}</strong></p>
+                                <p style="margin: 0;">${comment.commentContent}</p>
+                            </div>
+                        </div> `;
+
+                    commentContainer.appendChild(commentEl);
+                });
+            })
+    }
+
+    // 댓글 업로드 기능
+    // 모달창에서 사용
+    function commentFunc(){
+
+        let postId = document.getElementById("postId").textContent.trim();
+        let comment = document.getElementById("commentText").value.trim();
+
+        if(comment == ''){
+            alert("데이터를 입력하세요");
+            return;
+        }
+
+        document.getElementById("commentText").value ='';
+
+        fetch('/post/comment', {
+            method: 'POST',           // POST 방식으로 요청 전송
+            headers: { 'Content-Type': 'application/json' },
+            // JSON 데이터로 전송
+            body: JSON.stringify({ postId: postId, commentContent: comment })
+        })
+            .then(res => {
+                if (!res.ok) throw new Error('요청 실패');
+                return res.text(); // 또는 .json() – 서버 응답 형태에 따라
+            })
+            .then(data => {
+                console.log("댓글 저장 성공");
+                getCommentList();
+            })
+            .catch(error => {
+                alert("로그인 하세요");
+                console.error("에러 발생");
+            });
+    }
+</script>
+
+
+
+

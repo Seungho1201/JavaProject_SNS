@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/editprofile.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <nav>
+                <a href="/main" class="nav-item">
+                    <i class="fas fa-home"></i><span>홈</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-search"></i><span>검색</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="far fa-compass"></i><span>탐색 탭</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="far fa-play-circle"></i><span>릴스</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="far fa-paper-plane"></i><span>메세지</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="far fa-heart"></i><span>알림</span>
+                </a>
+                <a href="/write" class="nav-item">
+                    <i class="far fa-plus-square"></i><span>만들기</span>
+                </a>
+                <a href="/mypage" class="nav-item">
+                    <img src="https://placehold.co/80" class="profile-img" alt="Story"/><span>프로필</span>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="edit-profile-area">
+            <form th:action="@{/mypage/edit-profile}" method="post" enctype="multipart/form-data" class="edit-form">
+
+                <div class="profile-summary-box">
+                <img src="https://placehold.co/60" alt="프로필 이미지" class="profile-image">
+                <div class="profile-text">
+                    <p class="profile-id" th:text="${userId}">아이디</p>
+                    <p class="profile-name" th:text="${userName}">비밀번호</p>
+                </div>
+                    <!-- 실제 파일 input -->
+                    <input type="file" name="profileImg" id="profileImgInput" accept="image/*" style="display: none;">
+
+                    <!-- 사용자용 버튼 -->
+                    <button type="button" class="change-photo-btn" onclick="document.getElementById('profileImgInput').click();">사진 변경</button>
+            </div>
+
+
+                <div class="form-group">
+                    <label for="website">웹사이트</label>
+                    <input type="text" id="website" placeholder="웹사이트" disabled>
+                    <p class="form-tip">링크 수정은 모바일 앱에서만 가능합니다.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="bio">소개</label>
+                    <input type="text" id="bio" name="profile" th:value="${userProfileMessage}" maxlength="150" />
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">성별</label>
+                    <select id="gender">
+                        <option>남성</option>
+                        <option>여성</option>
+                        <option>기타</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="save-btn">저장</button>
+            </form>
+        </main>
+    </div>
+</body>
+</html>
