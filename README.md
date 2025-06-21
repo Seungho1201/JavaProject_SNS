@@ -21,19 +21,19 @@
 # 구현 이미지
 
 로그인 페이지
-![Image](https://github.com/user-attachments/assets/0767b12d-2a4a-49e5-88cb-aa6240d0375b)
+![Image](https://github.com/user-attachments/assets/a6d3aa17-64ad-4e2f-bc44-5e409d7a1fbc)
 
 회원가입 페이지
-![Image](https://github.com/user-attachments/assets/e85b5d20-c178-4901-892d-6e019ba30805)
+![Image](https://github.com/user-attachments/assets/bbfa0465-04bd-4f91-ab4d-73fa9c0d0c7e)
 
 메인 페이지
-![Image](https://github.com/user-attachments/assets/d9755a69-6fec-4a21-88c2-24c022eadd72) 
-
-글 작성 후 메인 페이지
-![Image](https://github.com/user-attachments/assets/e72f76aa-2a1d-4058-8184-8a791612285f)
+![Image](https://github.com/user-attachments/assets/56317dec-0349-47a7-8671-f6906cabb62b)
 
 댓글
-![Image](https://github.com/user-attachments/assets/524982db-1e33-440a-be10-d11f512b3d91)
+![Image](https://github.com/user-attachments/assets/7df86110-787c-46d5-ac44-f55cb8e8e1ed)
 
 마이페이지
-![Image](https://github.com/user-attachments/assets/6dcb8609-86dd-4cfb-9b5b-39d0307cbf85)
+![Image](https://github.com/user-attachments/assets/dbbd956e-803c-44a0-ac6b-e94a88849124)
+
+게시글 저장 후 마이페이지
+![Image](https://github.com/user-attachments/assets/76e7bfab-27a6-4fb2-8419-5166079141af)
