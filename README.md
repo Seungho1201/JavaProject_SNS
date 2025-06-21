@@ -21,10 +21,10 @@
 # 구현 이미지
 
 로그인 페이지
-![Image](https://github.com/user-attachments/assets/0767b12d-2a4a-49e5-88cb-aa6240d0375b)
+![Image](https://github.com/user-attachments/assets/a6d3aa17-64ad-4e2f-bc44-5e409d7a1fbc)
 
 회원가입 페이지
-![Image](https://github.com/user-attachments/assets/e85b5d20-c178-4901-892d-6e019ba30805)
+![Image](https://github.com/user-attachments/assets/bbfa0465-04bd-4f91-ab4d-73fa9c0d0c7e)
 
 메인 페이지
 ![Image](https://github.com/user-attachments/assets/56317dec-0349-47a7-8671-f6906cabb62b)
