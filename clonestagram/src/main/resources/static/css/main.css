@@ -43,6 +43,7 @@ html, body {
         display: flex;
         flex-direction: column;
     }
+
 }
 
 .nav {
@@ -122,6 +123,12 @@ html, body {
     margin-top: -50px;
     margin-left: -100px;
     height: fit-content;
+}
+
+@media (max-width: 1500px) {
+    .right-sidebar {
+        display: none;
+    }
 }
 
 .sidebar-user-info {
